@@ -1,9 +1,21 @@
-{% extends 'base/base.html' %}
+{% extends 'base/singleCardContent.html' %}
+
+{% load crispy_forms_tags %}
 
 {% block title %}
   <title>Login | Lambda</title>
 {% endblock title %}
 
-{% block content %}
-  <h1>Login page</h1>
-{% endblock content %}
+{% block cardHeader %}
+  Login
+{% endblock cardHeader %}
+
+{% block cardContent %}
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    {{ form|crispy }}
+
+    <button type="submit" class="btn btn-primary d-block mx-auto">Log in</button>
+  </form>
+{% endblock cardContent %}

@@ -1,33 +1,22 @@
-{% extends 'base/base.html' %}
+{% extends 'base/singleCardContent.html' %}
 
-{% block content %}
-  <div class="container mb-3" style="max-width: 670px;">
-    <div class="row mb-3">
+{% block cardHeader %}
+  Lambda Task Management
+{% endblock cardHeader %}
 
-      <div class="col">
-        <div class="card mb-3 border-primary">
-          <div class="card-header">
-            <h1>Lambda Task Management</h1>
-          </div>
-          <div class="card-body">
-            <p class="card-text lead">
-              Lambda is a task management system designed to help you get stuff
-              done.
-            </p>
-            <ul class="lead">
-              <li>Design custom tasks</li>
-              <li>Build tasks from mini-tasks</li>
-              <li>Schedule tasks</li>
-              <li>Mark completed tasks</li>
-              <li>Set task priority</li>
-              <li>Roll over uncompleted tasks</li>
-            </ul>
-            <a href="{% url 'login' %}" class="card-link">Login</a>
-            <a href="#" class="card-link">Register</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-{% endblock content %}
+{% block cardContent %}
+  <p class="card-text lead">
+    Lambda is a task management system designed to help you get stuff
+    done.
+  </p>
+  <ul class="lead">
+    <li>Design custom tasks</li>
+    <li>Build tasks from mini-tasks</li>
+    <li>Schedule tasks</li>
+    <li>Mark completed tasks</li>
+    <li>Set task priority</li>
+    <li>Roll over uncompleted tasks</li>
+  </ul>
+  <a href="{% url 'login' %}" class="card-link">Login</a>
+  <a href="#" class="card-link">Register</a>
+{% endblock cardContent %}

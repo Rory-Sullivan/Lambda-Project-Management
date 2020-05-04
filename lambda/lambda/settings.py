@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "base.apps.BaseConfig",
+    "crispy_forms",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -118,3 +119,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = "/static/"
+
+
+# Login and logout redirects
+
+LOGIN_URL = "login"
+
+LOGIN_REDIRECT_URL = "profile"
+
+
+# Crispy forms settings
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
