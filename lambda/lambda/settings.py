@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "tasks.apps.TasksConfig",
     "users.apps.UsersConfig",
     "base.apps.BaseConfig",
     "crispy_forms",
