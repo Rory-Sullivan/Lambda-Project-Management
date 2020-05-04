@@ -26,6 +26,7 @@
     <div class="collapse navbar-collapse justify-content-end text-right" id="navbarItems">
       <div class="navbar-nav">
         {% if request.user.is_authenticated %}
+          <span class="navbar-text pr-3">Logged in as {{ request.user.username }}</span>
           <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
         {% else %}
           <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
