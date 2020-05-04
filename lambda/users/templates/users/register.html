@@ -3,11 +3,11 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-  <title>Login | Lambda</title>
+  <title>Register | Lambda</title>
 {% endblock title %}
 
 {% block cardHeader %}
-  Login
+  Register
 {% endblock cardHeader %}
 
 {% block cardContent %}
@@ -16,9 +16,9 @@
 
     {{ form|crispy }}
 
-    <button type="submit" class="btn btn-primary d-block mx-auto">Log in</button>
+    <button type="submit" class="btn btn-primary d-block mx-auto">Register</button>
   </form>
   <small class="text-muted">
-    Don't have an account? <a href="{% url 'register' %}">Register</a>
+    Already have an account? <a href="{% url 'login' %}">Log in</a>
   </small>
 {% endblock cardContent %}
