@@ -17,6 +17,11 @@ class TaskCreateView(mixins.LoginRequiredMixin, generic.CreateView):
     fields = ["title", "description", "rollover", "user"]
 
 
+class TaskUpdateView(mixins.LoginRequiredMixin, generic.UpdateView):
+    model = Task
+    fields = ["title", "description", "rollover", "user"]
+
+
 class TaskDeleteView(
     mixins.LoginRequiredMixin, mixins.UserPassesTestMixin, generic.DeleteView
 ):
