@@ -17,4 +17,8 @@
   <p>
     User: {{ task.user }}
   </p>
+  <div class="mt-3 border-top pt-3">
+    <a class="btn btn-primary" href="{% url 'task-update' task.id %}">Update</a>
+    <a class="btn btn-danger" href="{% url 'task-delete' task.id %}">Delete</a>
+  </div>
 {% endblock cardContent %}

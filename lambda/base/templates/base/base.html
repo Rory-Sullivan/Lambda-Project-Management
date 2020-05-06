@@ -17,13 +17,19 @@
 <body class="bg-light">
 
   <!-- Navbar / header -->
-  <nav class="navbar navbar-expand navbar-dark bg-primary mb-3">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-primary mb-3">
     <a class="navbar-brand" href="{% url 'home' %}">λ</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarItems"
       aria-controls="navbarItems" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse justify-content-end text-right" id="navbarItems">
+    <div class="collapse navbar-collapse" id="navbarItems">
+      {% if request.user.is_authenticated %}
+        <div class="navbar-nav mr-auto">
+            <a class="nav-item nav-link" href="{% url 'tasks' %}">Tasks</a>
+        </div>
+      {% endif %}
+
       <div class="navbar-nav">
         {% if request.user.is_authenticated %}
           <span class="navbar-text pr-3">Logged in as {{ request.user.username }}</span>

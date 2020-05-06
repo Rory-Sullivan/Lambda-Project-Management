@@ -3,7 +3,7 @@
 {% block content %}
 
   <div class="container mb-3" style="max-width: 670px;">
-    <div class="row">
+    <div class="row mb-3">
       <div class="col">
         {% if messages %}
           {% for message in messages %}
@@ -14,15 +14,23 @@
         {% endif %}
       </div>
     </div>
+
+    <div class="row mb-3">
+      <div class="col">
+        <a class="btn btn-primary float-right" href="{% url 'task-create' %}">
+          <h4 class="mb-0">New task</h4>
+        </a>
+      </div>
+    </div>
     {% for task in object_list %}
       <div class="row mb-3">
 
         <div class="col">
           <div class="card mb-3 border-primary">
             <div class="card-header">
-              <h2>
-                {{ task.title }}
-              </h2>
+              <h3>
+                <a class="text-dark" href="{% url "task-detail" task.id %}">{{ task.title }}</a>
+              </h3>
             </div>
             <div class="card-body">
               <p>
