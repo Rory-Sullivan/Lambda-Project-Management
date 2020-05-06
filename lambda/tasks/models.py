@@ -8,3 +8,6 @@ class Task(models.Model):
     rollover = models.BooleanField(default=False)
     completed = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
