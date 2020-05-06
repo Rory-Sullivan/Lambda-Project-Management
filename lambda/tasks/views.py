@@ -6,3 +6,7 @@ from .models import Task
 
 class TaskListView(mixins.LoginRequiredMixin, generic.ListView):
     model = Task
+
+
+class TaskDetailView(mixins.LoginRequiredMixin, generic.DetailView):
+    model = Task
