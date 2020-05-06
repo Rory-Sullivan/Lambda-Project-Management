@@ -1,0 +1,48 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+  <div class="container mb-3" style="max-width: 670px;">
+    <div class="row">
+      <div class="col">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+    {% for task in object_list %}
+      <div class="row mb-3">
+
+        <div class="col">
+          <div class="card mb-3 border-primary">
+            <div class="card-header">
+              <h2>
+                {{ task.title }}
+              </h2>
+            </div>
+            <div class="card-body">
+              <p>
+                {{ task.description }}
+              </p>
+              <p>
+                Rollover: {{ task.rollover }}
+              </p>
+              <p>
+                Completed: {{ task.completed }}
+              </p>
+              <p>
+                User: {{ task.user }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    {% endfor %}
+
+  </div>
+{% endblock content %}
