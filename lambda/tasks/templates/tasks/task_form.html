@@ -1,0 +1,21 @@
+{% extends 'base/singleCardContent.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>Create Task | Lambda</title>
+{% endblock title %}
+
+{% block cardHeader %}
+  Create Task
+{% endblock cardHeader %}
+
+{% block cardContent %}
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    {{ form|crispy }}
+
+    <button type="submit" class="btn btn-primary d-block mx-auto">Save</button>
+  </form>
+{% endblock cardContent %}

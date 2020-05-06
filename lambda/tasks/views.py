@@ -10,3 +10,8 @@ class TaskListView(mixins.LoginRequiredMixin, generic.ListView):
 
 class TaskDetailView(mixins.LoginRequiredMixin, generic.DetailView):
     model = Task
+
+
+class TaskCreateView(mixins.LoginRequiredMixin, generic.CreateView):
+    model = Task
+    fields = ["title", "description", "rollover", "user"]
