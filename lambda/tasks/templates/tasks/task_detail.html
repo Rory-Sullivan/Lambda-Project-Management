@@ -1,0 +1,20 @@
+{% extends 'base/singleCardContent.html' %}
+
+{% block cardHeader %}
+  {{ object.title }}
+{% endblock cardHeader %}
+
+{% block cardContent %}
+  <p>
+    {{ task.description }}
+  </p>
+  <p>
+    Rollover: {{ task.rollover }}
+  </p>
+  <p>
+    Completed: {{ task.completed }}
+  </p>
+  <p>
+    User: {{ task.user }}
+  </p>
+{% endblock cardContent %}
