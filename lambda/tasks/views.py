@@ -15,3 +15,17 @@ class TaskDetailView(mixins.LoginRequiredMixin, generic.DetailView):
 class TaskCreateView(mixins.LoginRequiredMixin, generic.CreateView):
     model = Task
     fields = ["title", "description", "rollover", "user"]
+
+
+class TaskDeleteView(
+    mixins.LoginRequiredMixin, mixins.UserPassesTestMixin, generic.DeleteView
+):
+    model = Task
+    success_url = "/tasks"
+
+    def test_func(self):
+        task = self.get_object()
+
+        if self.request.user == task.user:
+            return True
+        return False
