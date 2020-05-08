@@ -8,7 +8,7 @@ class Project(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     # TODO: team_leader
-    team = models.ManyToManyField(User)
+    team = models.ManyToManyField(User, blank=True)
 
     date_created = models.DateTimeField(auto_now_add=True)
     date_modifed = models.DateTimeField(
