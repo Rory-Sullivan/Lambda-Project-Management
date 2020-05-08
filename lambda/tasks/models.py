@@ -20,10 +20,10 @@ class Task(models.Model):
 
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
-    date_due = models.DateField(blank=True)
+    date_due = models.DateField(null=True, blank=True)
 
     completed = models.BooleanField(default=False)
-    date_completed = models.DateField(blank=True)
+    date_completed = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.title
