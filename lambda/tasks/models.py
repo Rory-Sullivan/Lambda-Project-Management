@@ -13,9 +13,7 @@ class Task(models.Model):
 
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    assigned_to_project = models.ForeignKey(
-        Project, on_delete=models.PROTECT, blank=True
-    )  # TODO: remove allow blank
+    assigned_to_project = models.ForeignKey(Project, on_delete=models.PROTECT)
     assigned_to_user = models.ForeignKey(User, on_delete=models.PROTECT)
     priority_level = models.IntegerField(choices=PRIORITY_LEVELS, default=3)
     estimated_duration = models.DurationField()
