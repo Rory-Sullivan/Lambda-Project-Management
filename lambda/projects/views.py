@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+# TODO: Create views
+# TODO: Add form validation for date due
+# TODO: Add form validation for date completed
