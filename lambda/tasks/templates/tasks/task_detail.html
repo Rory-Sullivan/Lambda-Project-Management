@@ -1,5 +1,9 @@
 {% extends 'base/singleCardContent.html' %}
 
+{% block title %}
+  <title>Task {{ task.id }} | Lambda</title>
+{% endblock title %}
+
 {% block cardHeader %}
   <h2>{{ task.id }}&emsp;{{ task.title }}</h2>
 {% endblock cardHeader %}
