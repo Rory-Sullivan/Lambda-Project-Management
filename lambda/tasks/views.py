@@ -29,7 +29,7 @@ class TaskCreateView(
 ):
     model = Task
     fields = TASK_FIELDS
-    success_message = "Task #%(id) was created successfully"
+    success_message = "Task #%(id)s was created successfully"
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.id,)
