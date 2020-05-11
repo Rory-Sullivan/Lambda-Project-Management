@@ -30,7 +30,7 @@
         </div>
       {% endif %}
 
-      <div class="navbar-nav">
+      <div class="navbar-nav ml-auto">
         {% if request.user.is_authenticated %}
           <span class="navbar-text pr-3">Logged in as {{ request.user.username }}</span>
           <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
