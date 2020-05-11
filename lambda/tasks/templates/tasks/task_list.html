@@ -22,35 +22,34 @@
         </a>
       </div>
     </div>
-    {% for task in object_list %}
-      <div class="row mb-3">
 
-        <div class="col">
-          <div class="card mb-3 border-primary">
-            <div class="card-header">
-              <h3>
-                <a class="text-dark" href="{% url "task-detail" task.id %}">{{ task.title }}</a>
-              </h3>
-            </div>
-            <div class="card-body">
-              <p>
-                {{ task.description }}
-              </p>
-              <p>
-                Rollover: {{ task.rollover }}
-              </p>
-              <p>
-                Completed: {{ task.completed }}
-              </p>
-              <p>
-                User: {{ task.user }}
-              </p>
-            </div>
-          </div>
-        </div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Project</th>
+          <th scope="col">Assigned to</th>
+          <th scope="col">Priority</th>
+          <th scope="col">Due</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for task in object_list %}
+          <tr onclick="window.document.location='{% url 'task-detail' task.id %}'"
+            {% if task.completed %}class="table-success"{% endif %}
+          >
 
-      </div>
-    {% endfor %}
+            <th scope="row">{{ task.id }}</th>
+            <td>{{ task.title }}</td>
+            <td>{{ task.assigned_to_project }}</td>
+            <td>{{ task.assigned_to_user }}</td>
+            <td>{{ task.get_priority_level_display }}</td>
+            <td>{{ task.date_due }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
   </div>
 {% endblock content %}
