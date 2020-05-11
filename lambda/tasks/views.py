@@ -59,6 +59,7 @@ class TaskCompleteView(
         "date_completed": date.today(),
     }
     success_message = "Task #%(id)s completed"
+    success_url = "/tasks"
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.id,)
