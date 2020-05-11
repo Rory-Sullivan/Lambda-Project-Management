@@ -1,23 +1,52 @@
 {% extends 'base/singleCardContent.html' %}
 
 {% block cardHeader %}
-  {{ object.title }}
+  <h2>{{ task.id }}&emsp;{{ task.title }}</h2>
 {% endblock cardHeader %}
 
 {% block cardContent %}
-  <p>
-    {{ task.description }}
-  </p>
-  <p>
-    Rollover: {{ task.rollover }}
-  </p>
-  <p>
-    Completed: {{ task.completed }}
-  </p>
-  <p>
-    User: {{ task.user }}
-  </p>
-  <div class="mt-3 border-top pt-3">
+  <ul class="list-group list-group-horizontal">
+    <li class="list-group-item flex-fill"><strong>Project:</strong>&emsp;{{ task.assigned_to_project }}</li>
+    <li class="list-group-item flex-fill"><strong>Assigned to:</strong>&emsp;{{ task.assigned_to_user }}</li>
+  </ul>
+  <div class="card-body">
+    <h4>Detail</h4>
+    <p>
+      {{ task.description }}
+    </p>
+  </div>
+  <ul class="list-group">
+    <li
+      {% if task.priority_level <= 3 %}
+        class="list-group-item list-group-item-success"
+      {% elif task.priority_level <= 6 %}
+        class="list-group-item list-group-item-warning"
+      {% elif task.priority_level <= 9 %}
+        class="list-group-item list-group-item-danger"
+      {% endif %}>
+      <strong>Priority:</strong>&emsp;{{ task.get_priority_level_display }}
+    </li>
+    <li class="list-group-item"><strong>Estimated duration:</strong>&emsp;{{ task.estimated_duration }}</li>
+    <li class="list-group-item"><strong>Date created:</strong>&emsp;{{ task.date_created }}</li>
+    <li class="list-group-item"><strong>Last modified:</strong>&emsp;{{ task.date_modified }}</li>
+    <li class="list-group-item"><strong>Due:</strong>&emsp;{{ task.date_due }}</li>
+  </ul>
+  <ul class="list-group list-group-horizontal">
+      {% if task.completed %}
+        <li class="list-group-item flex-fill list-group-item-success">
+          <strong>Status:</strong>&emsp;Completed
+        </li>
+        <li class="list-group-item flex-fill list-group-item-success">
+          <strong>Date completed:</strong>&emsp;{{ task.date_completed }}
+        </li>
+      {% else %}
+        <li class="list-group-item flex-fill">
+          <strong>Status:</strong>&emsp;In-Progress
+        </li>
+      {% endif %}
+    </li>
+  </ul>
+  <div class="card-footer">
     <a class="btn btn-primary" href="{% url 'task-update' task.id %}">Update</a>
     <a class="btn btn-danger" href="{% url 'task-delete' task.id %}">Delete</a>
   </div>
