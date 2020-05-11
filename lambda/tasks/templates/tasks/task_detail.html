@@ -52,6 +52,10 @@
   </ul>
   <div class="card-footer">
     <a class="btn btn-primary" href="{% url 'task-update' task.id %}">Update</a>
-    <a class="btn btn-danger" href="{% url 'task-delete' task.id %}">Delete</a>
+    {% if not task.completed %}
+      <a class="btn btn-success" href="{% url 'task-complete' task.id %}">Complete</a>
+    {% endif %}
+    <a class="btn btn-danger float-right" href="{% url 'task-delete' task.id %}">Delete</a>
+
   </div>
 {% endblock cardContent %}
