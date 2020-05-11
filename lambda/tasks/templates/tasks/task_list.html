@@ -43,7 +43,6 @@
           <tr onclick="window.document.location='{% url 'task-detail' task.id %}'"
             {% if task.completed %}class="table-success"{% endif %}
           >
-
             <th scope="row">{{ task.id }}</th>
             <td>{{ task.title }}</td>
             <td>{{ task.assigned_to_project }}</td>

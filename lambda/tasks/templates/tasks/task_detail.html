@@ -4,6 +4,16 @@
   <title>Task {{ task.id }} | Lambda</title>
 {% endblock title %}
 
+{% block aboveCard %}
+  <div class="row mb-3">
+    <div class="col">
+      <a class="btn btn-primary float-right" href="{% url 'task-create' %}">
+        <h4 class="mb-0">New task</h4>
+      </a>
+    </div>
+  </div>
+{% endblock aboveCard %}
+
 {% block cardHeader %}
   <h2>{{ task.id }}&emsp;{{ task.title }}</h2>
 {% endblock cardHeader %}
