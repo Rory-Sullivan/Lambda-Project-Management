@@ -48,7 +48,13 @@
             <td>{{ task.title }}</td>
             <td>{{ task.assigned_to_project }}</td>
             <td>{{ task.assigned_to_user }}</td>
-            <td>{{ task.get_priority_level_display }}</td>
+            {% if task.priority_level <= 3 %}
+              <td class="text-success">{{ task.get_priority_level_display }}</td>
+            {% elif task.priority_level <= 6 %}
+              <td class="text-warning">{{ task.get_priority_level_display }}</td>
+            {% elif task.priority_level <= 9 %}
+              <td class="text-danger">{{ task.get_priority_level_display }}</td>
+            {% endif %}
             <td>{{ task.date_due }}</td>
           </tr>
         {% endfor %}
