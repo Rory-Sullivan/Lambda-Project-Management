@@ -17,7 +17,27 @@ TASK_FIELDS = [
 
 
 class TaskListView(mixins.LoginRequiredMixin, generic.ListView):
+    """Shows a list of all tasks"""
+
     model = Task
+
+
+class ActiveTaskListView(mixins.LoginRequiredMixin, generic.ListView):
+    """Shows a list of active tasks"""
+
+    model = Task
+
+    def get_queryset(self):
+        return Task.objects.filter(completed=False)
+
+
+class CompletedTaskListView(mixins.LoginRequiredMixin, generic.ListView):
+    """Shows a list of active tasks"""
+
+    model = Task
+
+    def get_queryset(self):
+        return Task.objects.filter(completed=True)
 
 
 class TaskDetailView(mixins.LoginRequiredMixin, generic.DetailView):
