@@ -43,7 +43,7 @@
     <li class="list-group-item"><strong>Estimated duration:</strong>&emsp;{{ task.estimated_duration }}</li>
     <li class="list-group-item"><strong>Date created:</strong>&emsp;{{ task.date_created }}</li>
     <li class="list-group-item"><strong>Last modified:</strong>&emsp;{{ task.date_modified }}</li>
-    <li class="list-group-item"><strong>Due:</strong>&emsp;{{ task.date_due }}</li>
+    <li class="list-group-item"><strong>Due:</strong>&emsp;{{ task.date_due }}&emsp;({{ task.date_due|timeuntil }})</li>
   </ul>
   <ul class="list-group list-group-horizontal">
       {% if task.completed %}

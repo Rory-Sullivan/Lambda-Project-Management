@@ -35,7 +35,7 @@
           <th scope="col">Project</th>
           <th scope="col">Assigned to</th>
           <th scope="col">Priority</th>
-          <th scope="col">Due</th>
+          <th scope="col">Due in</th>
         </tr>
       </thead>
       <tbody>
@@ -54,7 +54,7 @@
             {% elif task.priority_level <= 9 %}
               <td class="text-danger">{{ task.get_priority_level_display }}</td>
             {% endif %}
-            <td>{{ task.date_due }}</td>
+            <td>{{ task.date_due|timeuntil }}</td>
           </tr>
         {% endfor %}
       </tbody>
