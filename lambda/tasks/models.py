@@ -17,11 +17,11 @@ class Task(models.Model):
     assigned_to_project = models.ForeignKey(Project, on_delete=models.PROTECT)
     assigned_to_user = models.ForeignKey(User, on_delete=models.PROTECT)
     priority_level = models.IntegerField(choices=PRIORITY_LEVELS, default=3)
-    estimated_duration = models.DurationField()
+    estimated_duration = models.DurationField(help_text="hh:mm")
 
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
-    date_due = models.DateField()
+    date_due = models.DateField(help_text="dd/mm/yyyy")
 
     completed = models.BooleanField(default=False)
     date_completed = models.DateField(null=True, blank=True)

@@ -4,16 +4,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views import generic
 from .models import Task
 from datetime import date
-
-TASK_FIELDS = [
-    "title",
-    "description",
-    "assigned_to_project",
-    "assigned_to_user",
-    "priority_level",
-    "estimated_duration",
-    "date_due",
-]
+from . import forms
 
 
 class TaskListView(mixins.LoginRequiredMixin, generic.ListView):
@@ -48,7 +39,7 @@ class TaskCreateView(
     mixins.LoginRequiredMixin, SuccessMessageMixin, generic.CreateView
 ):
     model = Task
-    fields = TASK_FIELDS
+    form_class = forms.TaskForm
     success_message = "Task #%(id)s was created successfully"
 
     def get_success_message(self, cleaned_data):
@@ -59,7 +50,7 @@ class TaskUpdateView(
     mixins.LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView
 ):
     model = Task
-    fields = TASK_FIELDS
+    form_class = forms.TaskForm
     success_message = "Task #%(id)s was updated successfully"
 
     def get_success_message(self, cleaned_data):
