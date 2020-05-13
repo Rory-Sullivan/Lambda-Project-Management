@@ -33,7 +33,9 @@
 
       <div class="navbar-nav ml-auto">
         {% if request.user.is_authenticated %}
-          <span class="navbar-text pr-3">Logged in as {{ request.user.username }}</span>
+          <a class="nav-item nav-link" href="{% url 'profile' %}">
+            Logged in as {{ request.user.username }}
+          </a>
           <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
         {% else %}
           <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
