@@ -9,14 +9,16 @@
 {% endblock cardHeader %}
 
 {% block cardContent %}
-  <form method="post" novalidate>
-    {% csrf_token %}
+  <div class="card-body">
+    <form method="post" novalidate>
+      {% csrf_token %}
 
-    <h2>
-      Are you sure you want to delete '{{ object.title }}'?
-    </h2>
+      <h4 class="mb-3">
+        Are you sure you want to delete Task #{{ object.id }} '{{ object.title }}'?
+      </h4>
 
-    <button type="submit" class="btn btn-danger">Delete</button>
-    <a href="{% url 'task-detail' object.id %}" class="btn btn-secondary">Cancel</a>
-  </form>
+      <button type="submit" class="btn btn-danger">Delete</button>
+      <a href="{% url 'task-detail' object.id %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
 {% endblock cardContent %}
