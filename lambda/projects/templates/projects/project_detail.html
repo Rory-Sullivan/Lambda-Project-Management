@@ -22,7 +22,12 @@
   <ul class="list-group list-group-horizontal">
     <li class="list-group-item flex-fill"><strong>Manager:</strong>&emsp;Not yet supported</li>
     <li class="list-group-item flex-fill">
-      <strong>Assigned to:</strong>&emsp;{{ project.team }}
+      <strong>Team:</strong>&emsp;
+      <ul>
+        {% for user in project.team.all %}
+          <li>{{ user.username }}</li>
+        {% endfor %}
+      </ul>
     </li>
   </ul>
   <div class="card-body">
