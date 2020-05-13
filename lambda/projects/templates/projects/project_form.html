@@ -1,0 +1,33 @@
+{% extends 'base/singleCardContent.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+  {% if project %}
+    <title>Project {{ project.id }} | Lambda</title>
+  {% else %}
+    <title>Create Project | Lambda</title>
+  {% endif %}
+{% endblock title %}
+
+{% block cardHeader %}
+  {% if project %}
+    <h2>Project {{ project.id }}</h2>
+  {% else %}
+    <h2>Create Project</h2>
+  {% endif %}
+
+{% endblock cardHeader %}
+
+{% block cardContent %}
+  <div class="card-body">
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      {{ form|crispy }}
+
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a class="btn btn-secondary" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+    </form>
+  </div>
+{% endblock cardContent %}

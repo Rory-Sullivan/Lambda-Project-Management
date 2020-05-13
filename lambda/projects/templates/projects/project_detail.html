@@ -1,0 +1,62 @@
+{% extends 'base/singleCardContent.html' %}
+
+{% block title %}
+  <title>Project {{ project.id }} | Lambda</title>
+{% endblock title %}
+
+{% block aboveCard %}
+  <div class="row mb-3">
+    <div class="col">
+      <a class="btn btn-primary float-right" href="{% url 'project-create' %}">
+        <h4 class="mb-0">New project</h4>
+      </a>
+    </div>
+  </div>
+{% endblock aboveCard %}
+
+{% block cardHeader %}
+  <h2>#{{ project.id }}&emsp;{{ project.name }}</h2>
+{% endblock cardHeader %}
+
+{% block cardContent %}
+  <ul class="list-group list-group-horizontal">
+    <li class="list-group-item flex-fill"><strong>Manager:</strong>&emsp;Not yet supported</li>
+    <li class="list-group-item flex-fill">
+      <strong>Assigned to:</strong>&emsp;{{ project.team }}
+    </li>
+  </ul>
+  <div class="card-body">
+    <h4>Detail</h4>
+    <p>
+      {{ project.description }}
+    </p>
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item"><strong>Date created:</strong>&emsp;{{ project.date_created }}</li>
+    <li class="list-group-item"><strong>Last modified:</strong>&emsp;{{ project.date_modified }}</li>
+    <li class="list-group-item"><strong>Due:</strong>&emsp;{{ project.date_due }}&emsp;({{ project.date_due|timeuntil }})</li>
+  </ul>
+  <ul class="list-group list-group-horizontal">
+      {% if project.completed %}
+        <li class="list-group-item flex-fill list-group-item-success">
+          <strong>Status:</strong>&emsp;Completed
+        </li>
+        <li class="list-group-item flex-fill list-group-item-success">
+          <strong>Date completed:</strong>&emsp;{{ project.date_completed }}
+        </li>
+      {% else %}
+        <li class="list-group-item flex-fill">
+          <strong>Status:</strong>&emsp;In-Progress
+        </li>
+      {% endif %}
+    </li>
+  </ul>
+  <div class="card-footer">
+    <a class="btn btn-primary" href="{% url 'project-update' project.id %}">Update</a>
+    {% if not project.completed %}
+      <a class="btn btn-success" href="{% url 'project-complete' project.id %}">Complete</a>
+    {% endif %}
+    <a class="btn btn-danger float-right" href="{% url 'project-delete' project.id %}">Delete</a>
+
+  </div>
+{% endblock cardContent %}

@@ -1,0 +1,22 @@
+{% extends 'base/singleCardContent.html' %}
+
+{% block title %}
+  <title>Delete Project | Lambda</title>
+{% endblock title %}
+
+{% block cardHeader %}
+  <h2>Delete Project</h2>
+{% endblock cardHeader %}
+
+{% block cardContent %}
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    <h2>
+      Are you sure you want to delete Project#{{ project.id }} '{{ project.name }}'?
+    </h2>
+
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="{% url 'project-detail' project.id %}" class="btn btn-secondary">Cancel</a>
+  </form>
+{% endblock cardContent %}
