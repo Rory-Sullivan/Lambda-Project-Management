@@ -1,4 +1,4 @@
-{% extends 'base/singleCardContent.html' %}
+{% extends 'base/base_detail.html' %}
 
 {% load crispy_forms_tags %}
 
@@ -10,16 +10,18 @@
   {% endif %}
 {% endblock title %}
 
-{% block cardHeader %}
+{% block nav %}
+  {% include 'tasks/task_nav.html' %}
+{% endblock nav %}
+
+{% block cardContent %}
+  <div class="card-header">
   {% if task %}
     <h2>Task {{ task.id }}</h2>
   {% else %}
     <h2>Create Task</h2>
   {% endif %}
-
-{% endblock cardHeader %}
-
-{% block cardContent %}
+  </div>
   <div class="card-body">
     <form method="post" novalidate>
       {% csrf_token %}

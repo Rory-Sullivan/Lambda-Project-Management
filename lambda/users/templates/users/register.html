@@ -1,4 +1,4 @@
-{% extends 'base/singleCardContent.html' %}
+{% extends 'base/base_single_card.html' %}
 
 {% load crispy_forms_tags %}
 
@@ -6,19 +6,24 @@
   <title>Register | Lambda</title>
 {% endblock title %}
 
-{% block cardHeader %}
-  Register
-{% endblock cardHeader %}
+
 
 {% block cardContent %}
-  <form method="post" novalidate>
-    {% csrf_token %}
+  <div class="card-header">
+    <h3>Register</h3>
+  </div>
+  <div class="card-body">
+    <form method="post" novalidate>
+      {% csrf_token %}
 
-    {{ form|crispy }}
+      {{ form|crispy }}
 
-    <button type="submit" class="btn btn-primary d-block mx-auto">Register</button>
-  </form>
-  <small class="text-muted">
-    Already have an account? <a href="{% url 'login' %}">Log in</a>
-  </small>
+      <button type="submit" class="btn btn-primary d-block mx-auto">Register</button>
+    </form>
+  </div>
+  <div class="card-footer">
+    <small class="text-muted">
+      Already have an account? <a href="{% url 'login' %}">Log in</a>
+    </small>
+  </div>
 {% endblock cardContent %}

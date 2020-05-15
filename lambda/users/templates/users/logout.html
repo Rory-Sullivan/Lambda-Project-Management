@@ -1,4 +1,4 @@
-{% extends 'base/singleCardContent.html' %}
+{% extends 'base/base_single_card.html' %}
 
 {% block title %}
   <title>Logout | Lambda</title>
@@ -9,7 +9,10 @@
 {% endblock cardHeader %}
 
 {% block cardContent %}
-  <p>
+  <div class="card-header">
+    Logged out
+  </div>
+  <div class="card-body">
     You have been succesfully logged out.
-  </p>
+  </div>
 {% endblock cardContent %}

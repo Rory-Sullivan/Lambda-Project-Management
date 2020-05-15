@@ -1,0 +1,22 @@
+
+<a
+  href="{% url 'projects-active' %}"
+  class="nav-link
+    {% if request.resolver_match.url_name == 'projects-active' %}active{% endif %}">
+  Active Projects
+</a>
+<a
+  href="{% url 'projects-completed' %}"
+  class="nav-link
+    {% if request.resolver_match.url_name == 'projects-completed' %}active{% endif %}">
+  Completed Projects
+</a>
+<a
+  href="{% url 'projects' %}"
+  class="nav-link
+    {% if request.resolver_match.url_name == 'projects' %}active{% endif %}">
+  All Projects
+</a>
+<a href="{% url 'project-create' %}" class="nav-link">
+  New Project
+</a>

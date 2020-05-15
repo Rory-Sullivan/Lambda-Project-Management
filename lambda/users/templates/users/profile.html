@@ -1,14 +1,15 @@
-{% extends 'base/singleCardContent.html' %}
+{% extends 'base/base_single_card.html' %}
 
 {% block title %}
   <title>Profile | Lambda</title>
 {% endblock title %}
 
-{% block cardHeader %}
-  <h2>{{ user.username }}</h2>
-{% endblock cardHeader %}
+
 
 {% block cardContent %}
+  <div class="card-header">
+    <h2>{{ user.username }}</h2>
+  </div>
   <div class="card-body">
     <p>
       Name:&emsp;{{ user.first_name}} {{ user.last_name }}

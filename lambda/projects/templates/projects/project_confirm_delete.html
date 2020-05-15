@@ -1,14 +1,17 @@
-{% extends 'base/singleCardContent.html' %}
+{% extends 'base/base_detail.html' %}
 
 {% block title %}
   <title>Delete Project | Lambda</title>
 {% endblock title %}
 
-{% block cardHeader %}
-  <h2>Delete Project</h2>
-{% endblock cardHeader %}
+{% block nav %}
+  {% include 'projects/project_nav.html' %}
+{% endblock nav %}
 
 {% block cardContent %}
+  <div class="card-header">
+    <h2>Delete Project</h2>
+  </div>
   <div class="card-body">
     <form method="post" novalidate>
       {% csrf_token %}

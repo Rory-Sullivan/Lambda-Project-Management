@@ -1,14 +1,18 @@
-{% extends 'base/singleCardContent.html' %}
+{% extends 'base/base_detail.html' %}
 
 {% block title %}
-  <title>Create Task | Lambda</title>
+  <title>Delete Task {{ task.id }} | Lambda</title>
 {% endblock title %}
 
-{% block cardHeader %}
-  <h2>Delete Task</h2>
-{% endblock cardHeader %}
+{% block nav %}
+  {% include 'tasks/task_nav.html' %}
+{% endblock nav %}
 
 {% block cardContent %}
+  <div class="card-header">
+    <h2>Delete Task</h2>
+  </div>
+
   <div class="card-body">
     <form method="post" novalidate>
       {% csrf_token %}

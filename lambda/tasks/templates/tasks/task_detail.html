@@ -1,24 +1,19 @@
-{% extends 'base/singleCardContent.html' %}
+{% extends 'base/base_detail.html' %}
 
 {% block title %}
   <title>Task {{ task.id }} | Lambda</title>
 {% endblock title %}
 
-{% block aboveCard %}
-  <div class="row mb-3">
-    <div class="col">
-      <a class="btn btn-primary float-right" href="{% url 'task-create' %}">
-        <h4 class="mb-0">New task</h4>
-      </a>
-    </div>
-  </div>
-{% endblock aboveCard %}
+{% block nav %}
+  {% include 'tasks/task_nav.html' %}
+{% endblock nav %}
 
-{% block cardHeader %}
-  <h2>#{{ task.id }}&emsp;{{ task.title }}</h2>
-{% endblock cardHeader %}
+
 
 {% block cardContent %}
+  <div class="card-header">
+    <h2>#{{ task.id }}&emsp;{{ task.title }}</h2>
+  </div>
   <ul class="list-group list-group-horizontal">
     <li class="list-group-item flex-fill"><strong>Project:</strong>&emsp;{{ task.assigned_to_project }}</li>
     <li class="list-group-item flex-fill"><strong>Assigned to:</strong>&emsp;{{ task.assigned_to_user }}</li>

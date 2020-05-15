@@ -1,4 +1,4 @@
-{% extends 'base/singleCardContent.html' %}
+{% extends 'base/base_detail.html' %}
 
 {% load crispy_forms_tags %}
 
@@ -10,16 +10,18 @@
   {% endif %}
 {% endblock title %}
 
-{% block cardHeader %}
-  {% if project %}
-    <h2>Project {{ project.id }}</h2>
-  {% else %}
-    <h2>Create Project</h2>
-  {% endif %}
-
-{% endblock cardHeader %}
+{% block nav %}
+  {% include 'projects/project_nav.html' %}
+{% endblock nav %}
 
 {% block cardContent %}
+  <div class="card-header">
+    {% if project %}
+      <h2>Project {{ project.id }}</h2>
+    {% else %}
+      <h2>Create Project</h2>
+    {% endif %}
+  </div>
   <div class="card-body">
     <form method="post" novalidate>
       {% csrf_token %}

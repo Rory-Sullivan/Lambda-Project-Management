@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-lg mb-3">
+  <div class="row mb-3">
+    <div class="col-md-9 ml-auto">
+      {% include "base/base_messages.html" %}
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-3 mb-3">
+      <nav class="nav nav-pills flex-md-column">
+        {% block nav %}
+        {% endblock nav %}
+      </nav>
+    </div>
+
+    <div class="col-md-9">
+      <table id="sortTable1" class="table table-hover">
+        <thead>
+          <tr>
+            {% block tableHeaders %}
+            {% endblock tableHeaders %}
+          </tr>
+        </thead>
+        <tbody>
+          {% block tableBody %}
+          {% endblock tableBody %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'tasks/tableFunctions.js' %}"></script>
+{% endblock content %}

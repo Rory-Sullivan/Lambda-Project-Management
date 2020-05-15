@@ -1,24 +1,19 @@
-{% extends 'base/singleCardContent.html' %}
+{% extends 'base/base_detail.html' %}
 
 {% block title %}
   <title>Project {{ project.id }} | Lambda</title>
 {% endblock title %}
 
-{% block aboveCard %}
-  <div class="row mb-3">
-    <div class="col">
-      <a class="btn btn-primary float-right" href="{% url 'project-create' %}">
-        <h4 class="mb-0">New project</h4>
-      </a>
-    </div>
-  </div>
-{% endblock aboveCard %}
+{% block nav %}
+  {% include 'projects/project_nav.html' %}
+{% endblock nav %}
 
-{% block cardHeader %}
-  <h2>#{{ project.id }}&emsp;{{ project.name }}</h2>
-{% endblock cardHeader %}
+
 
 {% block cardContent %}
+  <div class="card-header">
+    <h2>#{{ project.id }}&emsp;{{ project.name }}</h2>
+  </div>
   <ul class="list-group list-group-horizontal">
     <li class="list-group-item flex-fill"><strong>Manager:</strong>&emsp;Not yet supported</li>
     <li class="list-group-item flex-fill">
