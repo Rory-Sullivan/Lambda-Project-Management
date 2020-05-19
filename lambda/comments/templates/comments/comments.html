@@ -1,0 +1,22 @@
+{# To be inluded in 'base_detail.html' template with a context of 'comments' #}
+
+<div class="card border-primary">
+  <div class="card-header">
+    <h3>Comments</h3>
+  </div>
+  <ul class="list-group list-group-flush">
+    {% if comments %}
+      {% for comment in comments %}
+        <li class="list-group-item">
+          <a href="#">{{ comment.author }}</a>
+          <p>{{ comment.text }}</p>
+          <small class="text-muted">{{ comment.date_created|timesince }} ago</small>
+        </li>
+      {% endfor %}
+    {% else %}
+      <li class="list-group-item">
+        <small class="text-muted">No comments yet</small>
+      </li>
+    {% endif %}
+  </ul>
+</div>

@@ -64,3 +64,9 @@
 
   </div>
 {% endblock cardContent %}
+
+{% block comments %}
+  {% with task.taskcomment_set.all as comments %}
+    {% include 'comments/comments.html' %}
+  {% endwith %}
+{% endblock comments %}

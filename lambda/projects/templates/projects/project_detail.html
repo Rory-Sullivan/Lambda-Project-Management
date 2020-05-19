@@ -60,3 +60,9 @@
 
   </div>
 {% endblock cardContent %}
+
+{% block comments %}
+  {% with project.projectcomment_set.all as comments %}
+    {% include 'comments/comments.html' %}
+  {% endwith %}
+{% endblock comments %}
