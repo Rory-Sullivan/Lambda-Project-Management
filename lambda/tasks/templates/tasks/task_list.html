@@ -40,14 +40,38 @@
       <td>{{ task.title }}</td>
       <td>{{ task.assigned_to_project }}</td>
       <td>{{ task.assigned_to_user }}</td>
+
       {% if task.priority_level <= 3 %}
-      <td class="text-success" data-sort-value="{{ task.priority_level }}">{{ task.get_priority_level_display }}</td>
+        <td class="text-success" data-sort-value="{{ task.priority_level }}">
+          {{ task.get_priority_level_display }}
+        </td>
       {% elif task.priority_level <= 6 %}
-      <td class="text-warning" data-sort-value="{{ task.priority_level }}">{{ task.get_priority_level_display }}</td>
+        <td class="text-warning" data-sort-value="{{ task.priority_level }}">
+          {{ task.get_priority_level_display }}
+        </td>
       {% elif task.priority_level <= 9 %}
-      <td class="text-danger" data-sort-value="{{ task.priority_level }}">{{ task.get_priority_level_display }}</td>
+        <td class="text-danger" data-sort-value="{{ task.priority_level }}">
+          {{ task.get_priority_level_display }}
+        </td>
+      {% else %}
+        <td data-sort-value="{{ task.priority_level }}">
+          {{ task.get_priority_level_display }}
+        </td>
       {% endif %}
-      <td data-sort-value="{{ task.days_till_due }}">{{ task.days_till_due }}&nbsp;days</td>
+
+      {% if task.days_till_due > 7 %}
+        <td class="text-success" data-sort-value="{{ task.days_till_due }}">
+          {{ task.days_till_due }}&nbsp;days
+        </td>
+      {% elif task.days_till_due > 0 and task.days_till_due <= 7 %}
+        <td class="text-warning" data-sort-value="{{ task.days_till_due }}">
+          {{ task.days_till_due }}&nbsp;days
+        </td>
+      {% else %}
+        <td class="text-danger" data-sort-value="{{ task.days_till_due }}">
+          {{ task.days_till_due }}&nbsp;days
+        </td>
+      {% endif %}
     </tr>
   {% endfor %}
 {% endblock tableBody %}
