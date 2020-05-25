@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth import mixins
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views import generic
+from django.views import generic, View
+from comments import forms as comment_forms
+from comments import views as comment_views
 from .models import Task
 from datetime import date
 from . import forms
@@ -31,8 +33,23 @@ class CompletedTaskListView(mixins.LoginRequiredMixin, generic.ListView):
         return Task.objects.filter(completed=True)
 
 
-class TaskDetailView(mixins.LoginRequiredMixin, generic.DetailView):
+class TaskDetailView(mixins.LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        view = TaskDetailDisplay.as_view()
+        return view(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        view = comment_views.PostTaskComment.as_view()
+        return view(request, *args, **kwargs)
+
+
+class TaskDetailDisplay(generic.DetailView):
     model = Task
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = comment_forms.TaskCommentForm()
+        return context
 
 
 class TaskCreateView(

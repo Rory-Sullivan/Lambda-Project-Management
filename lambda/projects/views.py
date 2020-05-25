@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.contrib.auth import mixins
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views import generic
+from comments import forms as comment_forms
+from comments import views as comment_views
 from .models import Project
 from datetime import date
 from . import forms
@@ -32,7 +34,22 @@ class CompletedProjectListView(mixins.LoginRequiredMixin, generic.ListView):
 
 
 class ProjectDetailView(mixins.LoginRequiredMixin, generic.DetailView):
+    def get(self, request, *args, **kwargs):
+        view = ProjectDetailDisplay.as_view()
+        return view(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        view = comment_views.PostProjectComment.as_view()
+        return view(request, *args, **kwargs)
+
+
+class ProjectDetailDisplay(generic.DetailView):
     model = Project
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = comment_forms.ProjectCommentForm()
+        return context
 
 
 class ProjectCreateView(

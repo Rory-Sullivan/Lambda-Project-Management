@@ -1,5 +1,7 @@
 {# To be inluded in 'base_detail.html' template with a context of 'comments' #}
 
+{% load crispy_forms_tags %}
+
 <div class="card border-primary">
   <div class="card-header">
     <h3>Comments</h3>
@@ -18,5 +20,15 @@
         <small class="text-muted">No comments yet</small>
       </li>
     {% endif %}
+
+    <li class="list-group-item">
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        {{ form|crispy }}
+
+        <button type="submit" class="btn btn-primary">Comment</button>
+      </form>
+    </li>
   </ul>
 </div>

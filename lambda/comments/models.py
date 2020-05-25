@@ -7,7 +7,7 @@ from projects.models import Project
 class TaskComment(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.PROTECT)
-    text = models.TextField()
+    text = models.TextField(verbose_name="comment")
     assigned_to_task = models.ForeignKey(Task, on_delete=models.PROTECT)
 
     date_created = models.DateTimeField(auto_now_add=True)
@@ -20,7 +20,7 @@ class TaskComment(models.Model):
 class ProjectComment(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.PROTECT)
-    text = models.TextField()
+    text = models.TextField(verbose_name="comment")
     assigned_to_project = models.ForeignKey(Project, on_delete=models.PROTECT)
 
     date_created = models.DateTimeField(auto_now_add=True)
