@@ -20,7 +20,7 @@
       <strong>Team:</strong>&emsp;
       <ul>
         {% for user in project.team.all %}
-          <li>{{ user.username }}</li>
+          <li><a href="{% url 'profile' user.username %}">{{ user.username }}</a></li>
         {% endfor %}
       </ul>
     </li>

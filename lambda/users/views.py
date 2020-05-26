@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import mixins
+from django.views import generic
 from .forms import UserRegisterForm
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 
 def register(request):
@@ -20,6 +22,8 @@ def register(request):
     return render(request, "users/register.html", {"form": form})
 
 
-@login_required
-def profile(request):
-    return render(request, "users/profile.html")
+class UserDetailView(mixins.LoginRequiredMixin, generic.DetailView):
+    model = User
+    template_name = "users/user_detail.html"
+    slug_url_kwarg = "username"
+    slug_field = "username"

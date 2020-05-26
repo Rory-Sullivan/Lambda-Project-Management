@@ -14,5 +14,5 @@ urlpatterns = [
         name="logout",
     ),
     path("register/", views.register, name="register"),
-    path("profile/", views.profile, name="profile"),
+    path("<str:username>/", views.UserDetailView.as_view(), name="profile",),
 ]

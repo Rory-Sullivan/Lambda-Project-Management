@@ -10,7 +10,7 @@
     {% if comments %}
       {% for comment in comments %}
         <li class="list-group-item">
-          <a href="#">{{ comment.author }}</a>
+          <a href="{% url 'profile' comment.author %}">{{ comment.author }}</a>
           <p>{{ comment.text }}</p>
           <small class="text-muted">{{ comment.date_created|timesince }} ago</small>
         </li>
