@@ -19,3 +19,10 @@ DEBUG = True
 # This can be blank if debug it True else it should contain the names of the
 # appropriate servers.
 ALLOWED_HOSTS = []
+
+
+# The bellow settings can be used to ensure that cookie data is only sent over
+# secure HTTPS connections. Set them to True if this is the case. Note that this
+# requires you to have HTTPS active on your site.
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False

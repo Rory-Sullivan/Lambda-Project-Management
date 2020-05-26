@@ -136,3 +136,9 @@ LOGIN_REDIRECT_URL = "tasks-active"
 # Crispy forms settings
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+
+# Securing session cookies
+
+CSRF_COOKIE_SECURE = local_settings.CSRF_COOKIE_SECURE
+SESSION_COOKIE_SECURE = local_settings.SESSION_COOKIE_SECURE
