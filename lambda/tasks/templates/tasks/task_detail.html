@@ -1,5 +1,7 @@
 {% extends 'base/base_detail.html' %}
 
+{% load duration_filters %}
+
 {% block title %}
   <title>Task {{ task.id }} | Lambda</title>
 {% endblock title %}
@@ -35,7 +37,7 @@
       {% endif %}>
       <strong>Priority:</strong>&emsp;{{ task.get_priority_level_display }}
     </li>
-    <li class="list-group-item"><strong>Estimated duration:</strong>&emsp;{{ task.estimated_duration }}</li>
+    <li class="list-group-item"><strong>Estimated duration:</strong>&emsp;{{ task.estimated_duration|readable_duration:"{hours}h {minutes}min" }}</li>
     <li class="list-group-item"><strong>Date created:</strong>&emsp;{{ task.date_created }}</li>
     <li class="list-group-item"><strong>Last modified:</strong>&emsp;{{ task.date_modified }}</li>
     <li class="list-group-item"><strong>Due:</strong>&emsp;{{ task.date_due }}&emsp;({{ task.date_due|timeuntil }})</li>
