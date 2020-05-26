@@ -4,8 +4,6 @@
   <title>Profile | Lambda</title>
 {% endblock title %}
 
-
-
 {% block cardContent %}
   <div class="card-header">
     <h2>{{ user.username }}</h2>
@@ -19,3 +17,9 @@
     </p>
   </div>
 {% endblock cardContent %}
+
+{% block belowCard %}
+  {% with user.task_set.all as task_list %}
+    {% include 'users/user_task_list.html' %}
+  {% endwith %}
+{% endblock belowCard %}

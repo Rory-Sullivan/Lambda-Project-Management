@@ -61,6 +61,12 @@
   </div>
 {% endblock cardContent %}
 
+{% block tasks %}
+  {% with project.task_set.all as task_list %}
+    {% include 'projects/project_task_list.html' %}
+  {% endwith %}
+{% endblock tasks %}
+
 {% block comments %}
   {% with project.projectcomment_set.all as comments %}
     {% include 'comments/comments.html' %}
