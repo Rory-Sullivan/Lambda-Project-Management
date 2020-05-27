@@ -16,7 +16,7 @@ SECRET_KEY = "add a secret key here"
 # environments.
 DEBUG = True
 
-# This can be blank if debug it True else it should contain the names of the
+# This can be blank if debug is True else it should contain the names of the
 # appropriate servers.
 ALLOWED_HOSTS = []
 
@@ -26,3 +26,15 @@ ALLOWED_HOSTS = []
 # requires you to have HTTPS active on your site.
 CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SECURE = False
+
+# # Setting up you database. Bellow are settings for a MySQL batabase. If you
+# # leave these commented out your site will use a sqlite database.
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': '<your_username>$<your_database_name>',
+#         'USER': '<your_username>',
+#         'PASSWORD': '<your_mysql_password>',
+#         'HOST': '<your_mysql_hostname>',
+#     }
+# }
