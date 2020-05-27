@@ -80,7 +80,7 @@ WSGI_APPLICATION = "lambda.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-if local_settings.DATABASES:
+if hasattr(local_settings, "DATABASES"):
     DATABASES = local_settings.DATABASES
 else:
     DATABASES = {
