@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import mixins
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views import generic
+from django.views import generic, View
 from comments import forms as comment_forms
 from comments import views as comment_views
 from .models import Project
@@ -15,6 +15,15 @@ class ProjectListView(mixins.LoginRequiredMixin, generic.ListView):
     model = Project
 
 
+class MyProjectListView(mixins.LoginRequiredMixin, generic.ListView):
+    """Shows a list of all users projects"""
+
+    model = Project
+
+    def get_queryset(self):
+        return Project.objects.filter(team=self.request.user)
+
+
 class ActiveProjectListView(mixins.LoginRequiredMixin, generic.ListView):
     """Shows a list of active projects"""
 
@@ -22,6 +31,17 @@ class ActiveProjectListView(mixins.LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return Project.objects.filter(completed=False)
+
+
+class MyActiveProjectListView(mixins.LoginRequiredMixin, generic.ListView):
+    """Shows a list of users active projects"""
+
+    model = Project
+
+    def get_queryset(self):
+        return Project.objects.filter(team=self.request.user).filter(
+            completed=False
+        )
 
 
 class CompletedProjectListView(mixins.LoginRequiredMixin, generic.ListView):
@@ -33,7 +53,35 @@ class CompletedProjectListView(mixins.LoginRequiredMixin, generic.ListView):
         return Project.objects.filter(completed=True)
 
 
-class ProjectDetailView(mixins.LoginRequiredMixin, generic.DetailView):
+class MyCompletedProjectListView(mixins.LoginRequiredMixin, generic.ListView):
+    """Shows a list of users completed projects"""
+
+    model = Project
+
+    def get_queryset(self):
+        return Project.objects.filter(team=self.request.user).filter(
+            completed=True
+        )
+
+
+class ProjectDetailView(
+    mixins.LoginRequiredMixin,
+    mixins.PermissionRequiredMixin,
+    generic.detail.SingleObjectMixin,
+    View,
+):
+    permission_required = "projects.view_project"
+    model = Project
+
+    def has_permission(self):
+        if super().has_permission():
+            return True
+        obj = self.get_object()
+        user = self.request.user
+        if obj.team.filter(pk=user.pk):
+            return True
+        return False
+
     def get(self, request, *args, **kwargs):
         view = ProjectDetailDisplay.as_view()
         return view(request, *args, **kwargs)
@@ -53,30 +101,60 @@ class ProjectDetailDisplay(generic.DetailView):
 
 
 class ProjectCreateView(
-    mixins.LoginRequiredMixin, SuccessMessageMixin, generic.CreateView
+    mixins.LoginRequiredMixin,
+    mixins.PermissionRequiredMixin,
+    SuccessMessageMixin,
+    generic.CreateView,
 ):
+    permission_required = "projects.add_project"
     model = Project
     form_class = forms.ProjectForm
     success_message = "Project #%(id)s was created successfully"
+
+    def has_permission(self):
+        if super().has_permission():
+            return True
+        obj = self.get_object()
+        user = self.request.user
+        if obj.team.filter(pk=user.pk):
+            return True
+        return False
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.id,)
 
 
 class ProjectUpdateView(
-    mixins.LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView
+    mixins.LoginRequiredMixin,
+    mixins.PermissionRequiredMixin,
+    SuccessMessageMixin,
+    generic.UpdateView,
 ):
+    permission_required = "projects.change_project"
     model = Project
     form_class = forms.ProjectForm
     success_message = "Project #%(id)s was updated successfully"
+
+    def has_permission(self):
+        if super().has_permission():
+            return True
+        obj = self.get_object()
+        user = self.request.user
+        if obj.team.filter(pk=user.pk):
+            return True
+        return False
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.id,)
 
 
 class ProjectCompleteView(
-    mixins.LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView
+    mixins.LoginRequiredMixin,
+    mixins.PermissionRequiredMixin,
+    SuccessMessageMixin,
+    generic.UpdateView,
 ):
+    permission_required = "projects.change_project"
     model = Project
     fields = [
         "completed",
@@ -89,10 +167,33 @@ class ProjectCompleteView(
     success_message = "Project #%(id)s completed"
     success_url = "/projects"
 
+    def has_permission(self):
+        if super().has_permission():
+            return True
+        obj = self.get_object()
+        user = self.request.user
+        if obj.team.filter(pk=user.pk):
+            return True
+        return False
+
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.id,)
 
 
-class ProjectDeleteView(mixins.LoginRequiredMixin, generic.DeleteView):
+class ProjectDeleteView(
+    mixins.LoginRequiredMixin,
+    mixins.PermissionRequiredMixin,
+    generic.DeleteView,
+):
+    permission_required = "projects.delete_project"
     model = Project
     success_url = "/projects"
+
+    def has_permission(self):
+        if super().has_permission():
+            return True
+        obj = self.get_object()
+        user = self.request.user
+        if obj.team.filter(pk=user.pk):
+            return True
+        return False

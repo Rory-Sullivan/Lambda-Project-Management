@@ -1,22 +1,52 @@
 
+<h4>My tasks</h4>
 <a
-  href="{% url 'tasks-active' %}"
+  href="{% url 'my-active-tasks' %}"
   class="nav-link
-    {% if request.resolver_match.url_name == 'tasks-active'%}active{% endif %}">
+    {% if request.resolver_match.url_name == 'my-active-tasks'%}active{% endif %}">
   Active Tasks
 </a>
 <a
-  href="{% url 'tasks-completed' %}"
+  href="{% url 'my-completed-tasks' %}"
   class="nav-link
-    {% if request.resolver_match.url_name == 'tasks-completed'%}active{% endif %}">
+    {% if request.resolver_match.url_name == 'my-completed-tasks'%}active{% endif %}">
   Completed Tasks
 </a>
 <a
-  href="{% url 'tasks' %}"
+  href="{% url 'my-tasks' %}"
   class="nav-link
-    {% if request.resolver_match.url_name == 'tasks'%}active{% endif %}">
+    {% if request.resolver_match.url_name == 'my-tasks'%}active{% endif %}">
   All Tasks
 </a>
-<a href="{% url 'task-create' %}" class="nav-link">
+<a
+  href="{% url 'create-task' %}"
+  class="nav-link
+    {% if request.resolver_match.url_name == 'create-task'%}active{% endif %}">
+  New Task
+</a>
+
+<h4>All tasks</h4>
+<a
+  href="{% url 'active-tasks' %}"
+  class="nav-link
+    {% if request.resolver_match.url_name == 'active-tasks'%}active{% endif %}">
+  Active Tasks
+</a>
+<a
+  href="{% url 'completed-tasks' %}"
+  class="nav-link
+    {% if request.resolver_match.url_name == 'completed-tasks'%}active{% endif %}">
+  Completed Tasks
+</a>
+<a
+  href="{% url 'all-tasks' %}"
+  class="nav-link
+    {% if request.resolver_match.url_name == 'all-tasks'%}active{% endif %}">
+  All Tasks
+</a>
+<a
+  href="{% url 'create-task' %}"
+  class="nav-link
+    {% if request.resolver_match.url_name == 'create-task'%}active{% endif %}">
   New Task
 </a>

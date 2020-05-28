@@ -15,6 +15,15 @@ class TaskListView(mixins.LoginRequiredMixin, generic.ListView):
     model = Task
 
 
+class MyTaskListView(mixins.LoginRequiredMixin, generic.ListView):
+    """Shows a list of all users tasks"""
+
+    model = Task
+
+    def get_queryset(self):
+        return Task.objects.filter(assigned_to_user=self.request.user)
+
+
 class ActiveTaskListView(mixins.LoginRequiredMixin, generic.ListView):
     """Shows a list of active tasks"""
 
@@ -22,6 +31,17 @@ class ActiveTaskListView(mixins.LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return Task.objects.filter(completed=False)
+
+
+class MyActiveTaskListView(mixins.LoginRequiredMixin, generic.ListView):
+    """Shows a list of users active tasks"""
+
+    model = Task
+
+    def get_queryset(self):
+        return Task.objects.filter(assigned_to_user=self.request.user).filter(
+            completed=False
+        )
 
 
 class CompletedTaskListView(mixins.LoginRequiredMixin, generic.ListView):
@@ -33,7 +53,35 @@ class CompletedTaskListView(mixins.LoginRequiredMixin, generic.ListView):
         return Task.objects.filter(completed=True)
 
 
-class TaskDetailView(mixins.LoginRequiredMixin, View):
+class MyCompletedTaskListView(mixins.LoginRequiredMixin, generic.ListView):
+    """Shows a list of users active tasks"""
+
+    model = Task
+
+    def get_queryset(self):
+        return Task.objects.filter(assigned_to_user=self.request.user).filter(
+            completed=True
+        )
+
+
+class TaskDetailView(
+    mixins.LoginRequiredMixin,
+    mixins.PermissionRequiredMixin,
+    generic.detail.SingleObjectMixin,
+    View,
+):
+    permission_required = "tasks.change_task"
+    model = Task
+
+    def has_permission(self):
+        if super().has_permission():
+            return True
+        obj = self.get_object()
+        user = self.request.user
+        if user == obj.assigned_to_user:
+            return True
+        return False
+
     def get(self, request, *args, **kwargs):
         view = TaskDetailDisplay.as_view()
         return view(request, *args, **kwargs)
@@ -53,8 +101,12 @@ class TaskDetailDisplay(generic.DetailView):
 
 
 class TaskCreateView(
-    mixins.LoginRequiredMixin, SuccessMessageMixin, generic.CreateView
+    mixins.LoginRequiredMixin,
+    mixins.PermissionRequiredMixin,
+    SuccessMessageMixin,
+    generic.CreateView,
 ):
+    permission_required = "tasks.add_task"
     model = Task
     form_class = forms.TaskForm
     success_message = "Task #%(id)s was created successfully"
@@ -64,19 +116,36 @@ class TaskCreateView(
 
 
 class TaskUpdateView(
-    mixins.LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView
+    mixins.LoginRequiredMixin,
+    mixins.PermissionRequiredMixin,
+    SuccessMessageMixin,
+    generic.UpdateView,
 ):
+    permission_required = "tasks.change_task"
     model = Task
     form_class = forms.TaskForm
     success_message = "Task #%(id)s was updated successfully"
+
+    def has_permission(self):
+        if super().has_permission():
+            return True
+        obj = self.get_object()
+        user = self.request.user
+        if user == obj.assigned_to_user:
+            return True
+        return False
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.id,)
 
 
 class TaskCompleteView(
-    mixins.LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView
+    mixins.LoginRequiredMixin,
+    mixins.PermissionRequiredMixin,
+    SuccessMessageMixin,
+    generic.UpdateView,
 ):
+    permission_required = "tasks.change_task"
     model = Task
     fields = [
         "completed",
@@ -89,10 +158,33 @@ class TaskCompleteView(
     success_message = "Task #%(id)s completed"
     success_url = "/tasks"
 
+    def has_permission(self):
+        if super().has_permission():
+            return True
+        obj = self.get_object()
+        user = self.request.user
+        if user == obj.assigned_to_user:
+            return True
+        return False
+
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.id,)
 
 
-class TaskDeleteView(mixins.LoginRequiredMixin, generic.DeleteView):
+class TaskDeleteView(
+    mixins.LoginRequiredMixin,
+    mixins.PermissionRequiredMixin,
+    generic.DeleteView,
+):
+    permission_required = "tasks.delete_task"
     model = Task
     success_url = "/tasks"
+
+    def has_permission(self):
+        if super().has_permission():
+            return True
+        obj = self.get_object()
+        user = self.request.user
+        if user == obj.assigned_to_user:
+            return True
+        return False

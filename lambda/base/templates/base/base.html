@@ -26,8 +26,8 @@
     <div class="collapse navbar-collapse" id="navbarItems">
       {% if request.user.is_authenticated %}
         <div class="navbar-nav mr-auto">
-            <a class="nav-item nav-link" href="{% url 'tasks-active' %}">Tasks</a>
-            <a class="nav-item nav-link" href="{% url 'projects-active' %}">Projects</a>
+            <a class="nav-item nav-link" href="{% url 'my-active-tasks' %}">Tasks</a>
+            <a class="nav-item nav-link" href="{% url 'my-active-projects' %}">Projects</a>
         </div>
       {% endif %}
 

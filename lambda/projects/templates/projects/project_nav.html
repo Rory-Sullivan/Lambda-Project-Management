@@ -1,22 +1,52 @@
 
+<h4>My projects</h4>
 <a
-  href="{% url 'projects-active' %}"
+  href="{% url 'my-active-projects' %}"
   class="nav-link
-    {% if request.resolver_match.url_name == 'projects-active' %}active{% endif %}">
+    {% if request.resolver_match.url_name == 'my-active-projects' %}active{% endif %}">
   Active Projects
 </a>
 <a
-  href="{% url 'projects-completed' %}"
+  href="{% url 'my-completed-projects' %}"
   class="nav-link
-    {% if request.resolver_match.url_name == 'projects-completed' %}active{% endif %}">
+    {% if request.resolver_match.url_name == 'my-completed-projects' %}active{% endif %}">
   Completed Projects
 </a>
 <a
-  href="{% url 'projects' %}"
+  href="{% url 'my-projects' %}"
   class="nav-link
-    {% if request.resolver_match.url_name == 'projects' %}active{% endif %}">
+    {% if request.resolver_match.url_name == 'my-projects' %}active{% endif %}">
   All Projects
 </a>
-<a href="{% url 'project-create' %}" class="nav-link">
+<a
+  href="{% url 'create-project' %}"
+  class="nav-link
+    {% if request.resolver_match.url_name == 'create-project' %}active{% endif %}">
+  New Project
+</a>
+
+<h4>All projects</h4>
+<a
+  href="{% url 'active-projects' %}"
+  class="nav-link
+    {% if request.resolver_match.url_name == 'active-projects' %}active{% endif %}">
+  Active Projects
+</a>
+<a
+  href="{% url 'completed-projects' %}"
+  class="nav-link
+    {% if request.resolver_match.url_name == 'completed-projects' %}active{% endif %}">
+  Completed Projects
+</a>
+<a
+  href="{% url 'all-projects' %}"
+  class="nav-link
+    {% if request.resolver_match.url_name == 'all-projects' %}active{% endif %}">
+  All Projects
+</a>
+<a
+  href="{% url 'create-project' %}"
+  class="nav-link
+    {% if request.resolver_match.url_name == 'create-project' %}active{% endif %}">
   New Project
 </a>

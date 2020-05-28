@@ -2,16 +2,27 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path("", views.ProjectListView.as_view(), name="projects"),
+    path("", views.ProjectListView.as_view(), name="all-projects"),
+    path("mine/", views.MyProjectListView.as_view(), name="my-projects"),
     path(
-        "active/", views.ActiveProjectListView.as_view(), name="projects-active"
+        "active/", views.ActiveProjectListView.as_view(), name="active-projects"
+    ),
+    path(
+        "my-active/",
+        views.MyActiveProjectListView.as_view(),
+        name="my-active-projects",
     ),
     path(
         "completed/",
         views.CompletedProjectListView.as_view(),
-        name="projects-completed",
+        name="completed-projects",
     ),
-    path("create/", views.ProjectCreateView.as_view(), name="project-create"),
+    path(
+        "my-completed/",
+        views.MyCompletedProjectListView.as_view(),
+        name="my-completed-projects",
+    ),
+    path("create/", views.ProjectCreateView.as_view(), name="create-project"),
     path(
         "project/<int:pk>/",
         views.ProjectDetailView.as_view(),
