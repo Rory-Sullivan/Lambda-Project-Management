@@ -143,6 +143,9 @@ class TaskUpdateView(
             return True
         return False
 
+    def get_initial(self):
+        return {"assigned_to_user": self.request.user}
+
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.id,)
 
