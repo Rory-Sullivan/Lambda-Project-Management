@@ -13,6 +13,6 @@ urlpatterns = [
         auth_views.LogoutView.as_view(template_name="users/logout.html"),
         name="logout",
     ),
-    path("register/", views.register, name="register"),
+    path("register/", views.UserCreateView.as_view(), name="register"),
     path("<str:username>/", views.UserDetailView.as_view(), name="profile",),
 ]
