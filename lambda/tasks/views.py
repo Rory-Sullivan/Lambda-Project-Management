@@ -111,6 +111,9 @@ class TaskCreateView(
     form_class = forms.TaskForm
     success_message = "Task #%(id)s was created successfully"
 
+    def get_initial(self):
+        return {"assigned_to_user": self.request.user}
+
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.id,)
 
