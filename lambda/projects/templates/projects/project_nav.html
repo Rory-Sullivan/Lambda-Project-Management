@@ -1,52 +1,63 @@
 
-<h4>My projects</h4>
-<a
-  href="{% url 'my-active-projects' %}"
-  class="nav-link
-    {% if request.resolver_match.url_name == 'my-active-projects' %}active{% endif %}">
-  Active Projects
-</a>
-<a
-  href="{% url 'my-completed-projects' %}"
-  class="nav-link
-    {% if request.resolver_match.url_name == 'my-completed-projects' %}active{% endif %}">
-  Completed Projects
-</a>
-<a
-  href="{% url 'my-projects' %}"
-  class="nav-link
-    {% if request.resolver_match.url_name == 'my-projects' %}active{% endif %}">
-  All Projects
-</a>
+
 <a
   href="{% url 'create-project' %}"
-  class="nav-link
+  class="btn btn-outline-primary btn-block mb-3
     {% if request.resolver_match.url_name == 'create-project' %}active{% endif %}">
   New Project
 </a>
 
-<h4>All projects</h4>
-<a
-  href="{% url 'active-projects' %}"
-  class="nav-link
-    {% if request.resolver_match.url_name == 'active-projects' %}active{% endif %}">
-  Active Projects
-</a>
-<a
-  href="{% url 'completed-projects' %}"
-  class="nav-link
-    {% if request.resolver_match.url_name == 'completed-projects' %}active{% endif %}">
-  Completed Projects
-</a>
-<a
-  href="{% url 'all-projects' %}"
-  class="nav-link
-    {% if request.resolver_match.url_name == 'all-projects' %}active{% endif %}">
-  All Projects
-</a>
-<a
-  href="{% url 'create-project' %}"
-  class="nav-link
-    {% if request.resolver_match.url_name == 'create-project' %}active{% endif %}">
-  New Project
-</a>
+<div class="card mb-3">
+  <div class="card-header text-center">
+    <strong>My projects</strong>
+  </div>
+
+  <nav class="nav nav-pills flex-md-column">
+    <a
+      href="{% url 'my-active-projects' %}"
+      class="nav-link
+        {% if request.resolver_match.url_name == 'my-active-projects' %}active{% endif %}">
+      Active Projects
+    </a>
+    <a
+      href="{% url 'my-completed-projects' %}"
+      class="nav-link
+        {% if request.resolver_match.url_name == 'my-completed-projects' %}active{% endif %}">
+      Completed Projects
+    </a>
+    <a
+      href="{% url 'my-projects' %}"
+      class="nav-link
+        {% if request.resolver_match.url_name == 'my-projects' %}active{% endif %}">
+      All Projects
+    </a>
+  </nav>
+</div>
+
+
+<div class="card mb-3">
+  <div class="card-header text-center">
+    <strong>All projects</strong>
+  </div>
+
+  <nav class="nav nav-pills flex-md-column">
+    <a
+      href="{% url 'active-projects' %}"
+      class="nav-link
+        {% if request.resolver_match.url_name == 'active-projects' %}active{% endif %}">
+      Active Projects
+    </a>
+    <a
+      href="{% url 'completed-projects' %}"
+      class="nav-link
+        {% if request.resolver_match.url_name == 'completed-projects' %}active{% endif %}">
+      Completed Projects
+    </a>
+    <a
+      href="{% url 'all-projects' %}"
+      class="nav-link
+        {% if request.resolver_match.url_name == 'all-projects' %}active{% endif %}">
+      All Projects
+    </a>
+  </nav>
+</div>
