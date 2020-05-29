@@ -15,3 +15,12 @@ class ProjectForm(forms.ModelForm):
         widgets = {
             "date_due": DateWidget(),
         }
+
+
+class CompleteProjectForm(forms.ModelForm):
+    class Meta:
+        model = models.Project
+        fields = [
+            "date_completed",
+        ]
+        widgets = {"date_completed": DateWidget()}

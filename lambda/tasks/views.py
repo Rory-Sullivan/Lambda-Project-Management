@@ -178,6 +178,7 @@ class TaskCompleteView(
     def form_valid(self, form):
         form.instance.completed = True
         form.instance.completed_by = self.request.user
+        form.instance.modified_by = self.request.user
         return super().form_valid(form)
 
 
