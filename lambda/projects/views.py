@@ -170,7 +170,6 @@ class ProjectCompleteView(
         "date_completed": date.today(),
     }
     success_message = "Project #%(id)s completed"
-    success_url = "/projects"
 
     def has_permission(self):
         if super().has_permission():

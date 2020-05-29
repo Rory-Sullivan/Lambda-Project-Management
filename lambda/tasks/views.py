@@ -161,7 +161,6 @@ class TaskCompleteView(
         "date_completed": date.today(),
     }
     success_message = "Task #%(id)s completed"
-    success_url = "/tasks/my-active"
 
     def has_permission(self):
         if super().has_permission():
