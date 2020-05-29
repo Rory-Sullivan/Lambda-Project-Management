@@ -18,8 +18,22 @@ class UserCreateView(generic.CreateView):
     success_url = "/users/login/"
 
 
-class UserDetailView(mixins.LoginRequiredMixin, generic.DetailView):
+class UserDetailView(
+    mixins.LoginRequiredMixin,
+    mixins.PermissionRequiredMixin,
+    generic.DetailView,
+):
     model = User
+    permission_required = "users.view_user"
     template_name = "users/user_detail.html"
     slug_url_kwarg = "username"
     slug_field = "username"
+
+    def has_permission(self):
+        if super().has_permission():
+            return True
+        obj = self.get_object()
+        user = self.request.user
+        if user == obj:
+            return True
+        return False
