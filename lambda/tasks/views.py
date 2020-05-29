@@ -114,6 +114,11 @@ class TaskCreateView(
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.id,)
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.instance.modified_by = self.request.user
+        return super().form_valid(form)
+
 
 class TaskUpdateView(
     mixins.LoginRequiredMixin,
@@ -138,6 +143,10 @@ class TaskUpdateView(
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.id,)
 
+    def form_valid(self, form):
+        form.instance.modified_by = self.request.user
+        return super().form_valid(form)
+
 
 class TaskCompleteView(
     mixins.LoginRequiredMixin,
@@ -147,12 +156,8 @@ class TaskCompleteView(
 ):
     permission_required = "tasks.change_task"
     model = Task
-    fields = [
-        "completed",
-        "date_completed",
-    ]
+    form_class = forms.CompleteTaskForm
     initial = {
-        "completed": True,
         "date_completed": date.today(),
     }
     success_message = "Task #%(id)s completed"
@@ -169,6 +174,11 @@ class TaskCompleteView(
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.id,)
+
+    def form_valid(self, form):
+        form.instance.completed = True
+        form.instance.completed_by = self.request.user
+        return super().form_valid(form)
 
 
 class TaskDeleteView(

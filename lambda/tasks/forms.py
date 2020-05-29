@@ -1,6 +1,7 @@
 from django import forms
 from . import models
 from base.widgets import DurationWidget, DateWidget
+from datetime import date
 
 
 class TaskForm(forms.ModelForm):
@@ -19,3 +20,12 @@ class TaskForm(forms.ModelForm):
             "estimated_duration": DurationWidget(),
             "date_due": DateWidget(),
         }
+
+
+class CompleteTaskForm(forms.ModelForm):
+    class Meta:
+        model = models.Task
+        fields = [
+            "date_completed",
+        ]
+        widgets = {"date_completed": DateWidget()}

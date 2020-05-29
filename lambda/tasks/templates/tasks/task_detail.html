@@ -38,8 +38,14 @@
       <strong>Priority:</strong>&emsp;{{ task.get_priority_level_display }}
     </li>
     <li class="list-group-item"><strong>Estimated duration:</strong>&emsp;{{ task.estimated_duration|readable_duration:"{hours}h {minutes}min" }}</li>
-    <li class="list-group-item"><strong>Date created:</strong>&emsp;{{ task.date_created }}</li>
-    <li class="list-group-item"><strong>Last modified:</strong>&emsp;{{ task.date_modified }}</li>
+    <li class="list-group-item">
+      <strong>Date created:</strong>&emsp;{{ task.date_created }}&emsp;
+      <strong>Created by:</strong>&emsp;<a href="{% url 'profile' task.created_by %}">{{ task.created_by }}</a>
+    </li>
+    <li class="list-group-item">
+      <strong>Last modified:</strong>&emsp;{{ task.date_modified }}&emsp;
+      <strong>Modified by:</strong>&emsp;<a href="{% url 'profile' task.modified_by %}">{{ task.modified_by }}</a>
+    </li>
     <li class="list-group-item"><strong>Due:</strong>&emsp;{{ task.date_due }}&emsp;({{ task.date_due|timeuntil }})</li>
   </ul>
   <ul class="list-group list-group-horizontal">
@@ -49,6 +55,9 @@
         </li>
         <li class="list-group-item flex-fill list-group-item-success">
           <strong>Date completed:</strong>&emsp;{{ task.date_completed }}
+        </li>
+        <li class="list-group-item flex-fill list-group-item-success">
+          <strong>Completed by:</strong>&emsp;<a href="{% url 'profile' task.completed_by %}">{{ task.completed_by }}</a>
         </li>
       {% else %}
         <li class="list-group-item flex-fill">
