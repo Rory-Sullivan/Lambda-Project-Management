@@ -1,10 +1,14 @@
 {# To be included in user detail view with a context of task_list containing tasks relevant to that user #}
+{% load static %}
 
-<div class="mb-3">
-  <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseTable1" aria-expanded="false" aria-controls="collapseTable1">View Tasks</button>
+<div class="row justify-content-between no-gutters mb-3">
+  <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target=".collabsible" aria-expanded="false" aria-controls="collapseTable1">View Tasks</button>
+  <div class="col-md-4 align-self-end collapse collabsible">
+    <input type="search" class="searchInput form-control" data-table-id="sortTable1" placeholder="Search" aria-label="Search">
+  </div>
 </div>
 
-<div class="collapse" id="collapseTable1">
+<div class="collapse collabsible">
   <table id="sortTable1" class="table table-hover">
     <thead>
       <tr>
@@ -71,3 +75,5 @@
     </tbody>
   </table>
 </div>
+
+<script src="{% static 'base/tableFunctions.js' %}"></script>
