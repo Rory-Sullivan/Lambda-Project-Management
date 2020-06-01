@@ -29,6 +29,10 @@
         <th class="sortHeader" data-sorted="false" data-table-id="sortTable1" data-col="4" data-type="number" scope="col">
           Due in
         </th>
+        <th class="d-none" data-sorted="false" data-table-id="sortTable1" data-col="6" data-type="text"
+          scope="col">
+          Status
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -70,6 +74,13 @@
               {{ task.days_till_due }}&nbsp;days
             </td>
           {% endif %}
+          <td class="d-none">
+            {% if task.completed %}
+              Completed
+            {% else %}
+              In Progress
+            {% endif %}
+          </td>
         </tr>
       {% endfor %}
     </tbody>
