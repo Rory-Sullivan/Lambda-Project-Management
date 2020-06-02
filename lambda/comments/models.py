@@ -8,7 +8,8 @@ class TaskComment(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.PROTECT)
     text = models.TextField(verbose_name="comment")
-    assigned_to_task = models.ForeignKey(Task, on_delete=models.PROTECT)
+
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
 
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
@@ -21,7 +22,7 @@ class ProjectComment(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.PROTECT)
     text = models.TextField(verbose_name="comment")
-    assigned_to_project = models.ForeignKey(Project, on_delete=models.PROTECT)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)

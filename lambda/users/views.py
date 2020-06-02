@@ -2,13 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import mixins
 from django.views import generic
 from . import forms
-from django.contrib import messages
-from django.contrib.auth.models import User, Group
-
-NORMAL_USER_GROUP = Group.objects.get(pk=1)
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.models import User
 
 
-class UserCreateView(generic.CreateView):
+class UserCreateView(SuccessMessageMixin, generic.CreateView):
     model = User
     form_class = forms.UserRegisterForm
     template_name = "users/user_register.html"

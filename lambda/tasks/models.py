@@ -2,9 +2,8 @@ from django.db import models
 from django.shortcuts import reverse
 from django.contrib.auth.models import User
 from projects.models import Project
+from teams.models import Team
 from datetime import date
-
-DEFAULT_USER_ID = 1
 
 
 class Task(models.Model):
@@ -16,25 +15,24 @@ class Task(models.Model):
 
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    assigned_to_project = models.ForeignKey(Project, on_delete=models.PROTECT)
-    assigned_to_user = models.ForeignKey(User, on_delete=models.PROTECT)
+
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.PROTECT)
+    assigned_to = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, blank=True
+    )
+
     priority_level = models.IntegerField(choices=PRIORITY_LEVELS, default=3)
     estimated_duration = models.DurationField(help_text="hh:mm")
 
     date_created = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(
-        User,
-        on_delete=models.PROTECT,
-        related_name="created_task_set",
-        default=DEFAULT_USER_ID,
-    )
+        User, on_delete=models.PROTECT, related_name="created_tasks",
+    )  # Set to current user on form validation
     date_modified = models.DateTimeField(auto_now=True)
     modified_by = models.ForeignKey(
-        User,
-        on_delete=models.PROTECT,
-        related_name="modified_task_set",
-        default=DEFAULT_USER_ID,
-    )
+        User, on_delete=models.PROTECT, related_name="modified_tasks",
+    )  # Set to current user on form validation
     date_due = models.DateField(help_text="dd/mm/yyyy")
 
     completed = models.BooleanField(default=False)
@@ -44,8 +42,8 @@ class Task(models.Model):
         on_delete=models.PROTECT,
         null=True,
         blank=True,
-        related_name="completed_task_set",
-    )
+        related_name="completed_tasks",
+    )  # Set to current user on form validation
 
     def __str__(self):
         return self.title

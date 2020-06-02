@@ -15,6 +15,11 @@
     <p>
       Email:&emsp;{{ user.email }}
     </p>
+    {% if user.profile.is_team_leader %}
+      <p>
+        Status:&emsp;Manager
+      </p>
+    {% endif %}
   </div>
 {% endblock cardContent %}
 

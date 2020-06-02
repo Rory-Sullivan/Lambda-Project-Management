@@ -20,7 +20,7 @@ class PostTaskComment(
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        form.instance.assigned_to_task = self.object
+        form.instance.task = self.object
         if form.is_valid():
             form.save()
         return super().form_valid(form)
@@ -43,7 +43,7 @@ class PostProjectComment(
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        form.instance.assigned_to_project = self.object
+        form.instance.project = self.object
         if form.is_valid():
             form.save()
         return super().form_valid(form)

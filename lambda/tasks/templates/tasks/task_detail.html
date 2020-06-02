@@ -17,8 +17,8 @@
     <h2>#{{ task.id }}&emsp;{{ task.title }}</h2>
   </div>
   <ul class="list-group list-group-horizontal">
-    <li class="list-group-item flex-fill"><strong>Project:</strong>&emsp;{{ task.assigned_to_project }}</li>
-    <li class="list-group-item flex-fill"><strong>Assigned to:</strong>&emsp;<a href="{% url 'profile' task.assigned_to_user %}">{{ task.assigned_to_user }}</a></li>
+    <li class="list-group-item flex-fill"><strong>Project:</strong>&emsp;{{ task.project }}</li>
+    <li class="list-group-item flex-fill"><strong>Assigned to:</strong>&emsp;<a href="{% url 'profile' task.assigned_to %}">{{ task.assigned_to }}</a></li>
   </ul>
   <div class="card-body">
     <h4>Detail</h4>

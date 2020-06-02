@@ -6,19 +6,14 @@ from django.contrib.auth.models import User
 
 
 class TaskForm(forms.ModelForm):
-    assigned_to_user = forms.ModelChoiceField(
-        queryset=User.objects.all(),
-        disabled=True,
-        help_text="Only team leaders can edit this field",
-    )
-
     class Meta:
         model = models.Task
         fields = [
             "title",
             "description",
-            "assigned_to_project",
-            "assigned_to_user",
+            "project",
+            "team",
+            "assigned_to",
             "priority_level",
             "estimated_duration",
             "date_due",
