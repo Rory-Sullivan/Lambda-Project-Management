@@ -10,12 +10,6 @@ from . import forms
 
 
 class ProjectListView(mixins.LoginRequiredMixin, generic.ListView):
-    """Shows a list of all projects"""
-
-    model = Project
-
-
-class MyProjectListView(mixins.LoginRequiredMixin, generic.ListView):
     """Shows a list of all users projects"""
 
     model = Project
@@ -25,15 +19,6 @@ class MyProjectListView(mixins.LoginRequiredMixin, generic.ListView):
 
 
 class ActiveProjectListView(mixins.LoginRequiredMixin, generic.ListView):
-    """Shows a list of active projects"""
-
-    model = Project
-
-    def get_queryset(self):
-        return Project.objects.filter(completed=False)
-
-
-class MyActiveProjectListView(mixins.LoginRequiredMixin, generic.ListView):
     """Shows a list of users active projects"""
 
     model = Project
@@ -45,15 +30,6 @@ class MyActiveProjectListView(mixins.LoginRequiredMixin, generic.ListView):
 
 
 class CompletedProjectListView(mixins.LoginRequiredMixin, generic.ListView):
-    """Shows a list of completed projects"""
-
-    model = Project
-
-    def get_queryset(self):
-        return Project.objects.filter(completed=True)
-
-
-class MyCompletedProjectListView(mixins.LoginRequiredMixin, generic.ListView):
     """Shows a list of users completed projects"""
 
     model = Project

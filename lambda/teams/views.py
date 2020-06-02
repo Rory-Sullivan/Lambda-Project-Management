@@ -13,12 +13,6 @@ from .models import Team
 
 
 class TeamListView(mixins.LoginRequiredMixin, generic.ListView):
-    """Shows a list of all teams"""
-
-    model = Team
-
-
-class MyTeamListView(mixins.LoginRequiredMixin, generic.ListView):
     """Shows a list of all users teams"""
 
     model = Team

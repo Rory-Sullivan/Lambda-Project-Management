@@ -19,9 +19,6 @@
   <th class="sortHeader" data-sorted="false" data-table-id="sortTable1" data-col="2" data-type="text" scope="col">
     Project
   </th>
-  <th class="sortHeader" data-sorted="false" data-table-id="sortTable1" data-col="3" data-type="text" scope="col">
-    Assigned to
-  </th>
   <th class="sortHeader" data-sorted="false" data-table-id="sortTable1" data-col="4" data-type="number"
     scope="col">
     Priority
@@ -42,8 +39,7 @@
       {% if task.completed %}class="table-success" {% endif %}>
       <th scope="row">{{ task.id }}</th>
       <td>{{ task.title }}</td>
-      <td>{{ task.assigned_to_project }}</td>
-      <td>{{ task.assigned_to_user }}</td>
+      <td>{{ task.project }}</td>
 
       {% if task.priority_level <= 3 %}
         <td class="text-success" data-sort-value="{{ task.priority_level }}">

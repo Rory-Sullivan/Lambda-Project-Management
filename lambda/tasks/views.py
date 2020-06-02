@@ -10,12 +10,6 @@ from . import forms
 
 
 class TaskListView(mixins.LoginRequiredMixin, generic.ListView):
-    """Shows a list of all tasks"""
-
-    model = Task
-
-
-class MyTaskListView(mixins.LoginRequiredMixin, generic.ListView):
     """Shows a list of all users tasks"""
 
     model = Task
@@ -25,15 +19,6 @@ class MyTaskListView(mixins.LoginRequiredMixin, generic.ListView):
 
 
 class ActiveTaskListView(mixins.LoginRequiredMixin, generic.ListView):
-    """Shows a list of active tasks"""
-
-    model = Task
-
-    def get_queryset(self):
-        return Task.objects.filter(completed=False)
-
-
-class MyActiveTaskListView(mixins.LoginRequiredMixin, generic.ListView):
     """Shows a list of users active tasks"""
 
     model = Task
@@ -45,15 +30,6 @@ class MyActiveTaskListView(mixins.LoginRequiredMixin, generic.ListView):
 
 
 class CompletedTaskListView(mixins.LoginRequiredMixin, generic.ListView):
-    """Shows a list of active tasks"""
-
-    model = Task
-
-    def get_queryset(self):
-        return Task.objects.filter(completed=True)
-
-
-class MyCompletedTaskListView(mixins.LoginRequiredMixin, generic.ListView):
     """Shows a list of users active tasks"""
 
     model = Task

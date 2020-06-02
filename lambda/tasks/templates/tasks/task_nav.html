@@ -12,50 +12,22 @@
   </div>
   <nav class="nav nav-pills flex-md-column">
     <a
-      href="{% url 'my-active-tasks' %}"
-      class="nav-link
-        {% if request.resolver_match.url_name == 'my-active-tasks'%}active{% endif %}">
-      Active Tasks
-    </a>
-    <a
-      href="{% url 'my-completed-tasks' %}"
-      class="nav-link
-        {% if request.resolver_match.url_name == 'my-completed-tasks'%}active{% endif %}">
-      Completed Tasks
-    </a>
-    <a
-      href="{% url 'my-tasks' %}"
-      class="nav-link
-        {% if request.resolver_match.url_name == 'my-tasks'%}active{% endif %}">
-      All Tasks
-    </a>
-  </nav>
-</div>
-
-
-<div class="card">
-  <div class="card-header text-center">
-    <strong>All tasks</strong>
-  </div>
-
-  <nav class="nav nav-pills flex-md-column">
-    <a
       href="{% url 'active-tasks' %}"
       class="nav-link
         {% if request.resolver_match.url_name == 'active-tasks'%}active{% endif %}">
-      Active Tasks
+      Active
     </a>
     <a
       href="{% url 'completed-tasks' %}"
       class="nav-link
         {% if request.resolver_match.url_name == 'completed-tasks'%}active{% endif %}">
-      Completed Tasks
+      Completed
     </a>
     <a
       href="{% url 'all-tasks' %}"
       class="nav-link
         {% if request.resolver_match.url_name == 'all-tasks'%}active{% endif %}">
-      All Tasks
+      All
     </a>
   </nav>
 </div>

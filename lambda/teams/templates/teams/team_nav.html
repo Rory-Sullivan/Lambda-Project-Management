@@ -9,15 +9,9 @@
 <div class="card mb-3">
   <nav class="nav nav-pills flex-md-column">
     <a
-      href="{% url 'all-teams' %}"
+      href="{% url 'teams' %}"
       class="nav-link
-        {% if request.resolver_match.url_name == 'all-teams'%}active{% endif %}">
-      All Teams
-    </a>
-    <a
-      href="{% url 'my-teams' %}"
-      class="nav-link
-        {% if request.resolver_match.url_name == 'my-teams'%}active{% endif %}">
+        {% if request.resolver_match.url_name == 'teams'%}active{% endif %}">
       My Teams
     </a>
   </nav>
