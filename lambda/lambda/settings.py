@@ -32,6 +32,7 @@ ALLOWED_HOSTS = local_settings.ALLOWED_HOSTS
 # Application definition
 
 INSTALLED_APPS = [
+    "teams.apps.TeamsConfig",
     "comments.apps.CommentsConfig",
     "projects.apps.ProjectsConfig",
     "tasks.apps.TasksConfig",
