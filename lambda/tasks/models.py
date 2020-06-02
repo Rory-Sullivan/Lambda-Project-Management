@@ -55,3 +55,16 @@ class Task(models.Model):
     def days_till_due(self):
         difference = self.date_due - date.today()
         return difference.days
+
+    # Authorization tests
+    def team_has_user(self, user):
+        return user in self.team.members.all()
+
+    def is_team_leader(self, user):
+        return user == self.team.leader
+
+    def is_assigned_to(self, user):
+        return user == self.assigned_to
+
+    def was_created_by(self, user):
+        return user == self.created_by

@@ -41,7 +41,10 @@ class CompletedProjectListView(mixins.LoginRequiredMixin, generic.ListView):
 
 
 class ProjectDetailView(
-    mixins.LoginRequiredMixin, generic.detail.SingleObjectMixin, View,
+    mixins.LoginRequiredMixin,
+    mixins.UserPassesTestMixin,
+    generic.detail.SingleObjectMixin,
+    View,
 ):
     model = Project
 
@@ -52,6 +55,11 @@ class ProjectDetailView(
     def post(self, request, *args, **kwargs):
         view = comment_views.PostProjectComment.as_view()
         return view(request, *args, **kwargs)
+
+    def test_func(self):
+        project = self.get_object()
+        user = self.request.user
+        return project.team_has_member(user)
 
 
 class ProjectDetailDisplay(generic.DetailView):
@@ -80,7 +88,10 @@ class ProjectCreateView(
 
 
 class ProjectUpdateView(
-    mixins.LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView,
+    mixins.LoginRequiredMixin,
+    mixins.UserPassesTestMixin,
+    SuccessMessageMixin,
+    generic.UpdateView,
 ):
     model = Project
     form_class = forms.ProjectForm
@@ -93,9 +104,17 @@ class ProjectUpdateView(
         form.instance.modified_by = self.request.user
         return super().form_valid(form)
 
+    def test_func(self):
+        project = self.get_object()
+        user = self.request.user
+        return project.leader_is(user)
+
 
 class ProjectCompleteView(
-    mixins.LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView,
+    mixins.LoginRequiredMixin,
+    mixins.UserPassesTestMixin,
+    SuccessMessageMixin,
+    generic.UpdateView,
 ):
     model = Project
     form_class = forms.CompleteProjectForm
@@ -113,9 +132,19 @@ class ProjectCompleteView(
         form.instance.modified_by = self.request.user
         return super().form_valid(form)
 
+    def test_func(self):
+        project = self.get_object()
+        user = self.request.user
+        return project.leader_is(user)
+
 
 class ProjectDeleteView(
-    mixins.LoginRequiredMixin, generic.DeleteView,
+    mixins.LoginRequiredMixin, mixins.UserPassesTestMixin, generic.DeleteView,
 ):
     model = Project
     success_url = "/projects"
+
+    def test_func(self):
+        project = self.get_object()
+        user = self.request.user
+        return project.leader_is(user)

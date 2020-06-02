@@ -17,9 +17,7 @@ class UserCreateView(SuccessMessageMixin, generic.CreateView):
 
 
 class UserDetailView(
-    mixins.LoginRequiredMixin,
-    mixins.PermissionRequiredMixin,
-    generic.DetailView,
+    mixins.LoginRequiredMixin, mixins.UserPassesTestMixin, generic.DetailView,
 ):
     model = User
     permission_required = "users.view_user"
@@ -27,11 +25,14 @@ class UserDetailView(
     slug_url_kwarg = "username"
     slug_field = "username"
 
-    def has_permission(self):
-        if super().has_permission():
-            return True
-        obj = self.get_object()
-        user = self.request.user
-        if user == obj:
-            return True
+    def test_func(self):
+        """Only users who share a team can view eachothers profiles"""
+
+        target_user = self.get_object()
+        request_user = self.request.user
+
+        for team in target_user.team_set.all():
+            if request_user in team.members.all():
+                return True
+
         return False

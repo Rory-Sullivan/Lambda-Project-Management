@@ -1,12 +1,14 @@
-from django.shortcuts import render
+from datetime import date
+
 from django.contrib.auth import mixins
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views import generic, View
+from django.views import View, generic
+
 from comments import forms as comment_forms
 from comments import views as comment_views
-from .models import Task
-from datetime import date
+
 from . import forms
+from .models import Task
 
 
 class TaskListView(mixins.LoginRequiredMixin, generic.ListView):
@@ -41,7 +43,10 @@ class CompletedTaskListView(mixins.LoginRequiredMixin, generic.ListView):
 
 
 class TaskDetailView(
-    mixins.LoginRequiredMixin, generic.detail.SingleObjectMixin, View,
+    mixins.LoginRequiredMixin,
+    mixins.UserPassesTestMixin,
+    generic.detail.SingleObjectMixin,
+    View,
 ):
     model = Task
 
@@ -52,6 +57,10 @@ class TaskDetailView(
     def post(self, request, *args, **kwargs):
         view = comment_views.PostTaskComment.as_view()
         return view(request, *args, **kwargs)
+
+    def test_func(self):
+        task = self.get_object()
+        return task.team_has_user(self.request.user)
 
 
 class TaskDetailDisplay(generic.DetailView):
@@ -83,7 +92,10 @@ class TaskCreateView(
 
 
 class TaskUpdateView(
-    mixins.LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView,
+    mixins.LoginRequiredMixin,
+    mixins.UserPassesTestMixin,
+    SuccessMessageMixin,
+    generic.UpdateView,
 ):
     model = Task
     form_class = forms.TaskForm
@@ -99,9 +111,22 @@ class TaskUpdateView(
         form.instance.modified_by = self.request.user
         return super().form_valid(form)
 
+    def test_func(self):
+        task = self.get_object()
+        user = self.request.user
+
+        if task.is_assigned_to(user):
+            return True
+        if task.is_team_leader(user):
+            return True
+        return False
+
 
 class TaskCompleteView(
-    mixins.LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView,
+    mixins.LoginRequiredMixin,
+    mixins.UserPassesTestMixin,
+    SuccessMessageMixin,
+    generic.UpdateView,
 ):
     model = Task
     form_class = forms.CompleteTaskForm
@@ -119,9 +144,25 @@ class TaskCompleteView(
         form.instance.modified_by = self.request.user
         return super().form_valid(form)
 
+    def test_func(self):
+        task = self.get_object()
+        user = self.request.user
+
+        if task.is_assigned_to(user):
+            return True
+        if task.is_team_leader(user):
+            return True
+        return False
+
 
 class TaskDeleteView(
-    mixins.LoginRequiredMixin, generic.DeleteView,
+    mixins.LoginRequiredMixin, mixins.UserPassesTestMixin, generic.DeleteView,
 ):
     model = Task
     success_url = "/tasks"
+
+    def test_func(self):
+        task = self.get_object()
+        user = self.request.user
+
+        return task.is_team_leader(user)

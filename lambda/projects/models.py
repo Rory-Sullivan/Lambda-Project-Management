@@ -36,3 +36,10 @@ class Project(models.Model):
 
     def get_absolute_url(self):
         return reverse("project-detail", kwargs={"pk": self.pk})
+
+    # Authorization methods
+    def team_has_member(self, user):
+        return user in self.team.members.all()
+
+    def leader_is(self, user):
+        return user == self.team.leader

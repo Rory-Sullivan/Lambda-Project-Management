@@ -134,7 +134,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 LOGIN_URL = "login"
 
-LOGIN_REDIRECT_URL = "my-active-tasks"
+LOGIN_REDIRECT_URL = "active-tasks"
 
 
 # Crispy forms settings

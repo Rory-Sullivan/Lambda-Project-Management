@@ -25,3 +25,10 @@ class Team(models.Model):
 
     def get_absolute_url(self):
         return reverse("team-detail", kwargs={"pk": self.pk})
+
+    # Authorization checks
+    def has_member(self, user):
+        return user in self.members.all()
+
+    def leader_is(self, user):
+        return user == self.leader

@@ -22,9 +22,13 @@ class TeamListView(mixins.LoginRequiredMixin, generic.ListView):
 
 
 class TeamDetailView(
-    mixins.LoginRequiredMixin, generic.DetailView,
+    mixins.LoginRequiredMixin, mixins.UserPassesTestMixin, generic.DetailView,
 ):
     model = Team
+
+    def test_func(self):
+        team = self.get_object()
+        return team.has_member(self.request.user)
 
 
 class TeamCreateView(
@@ -44,7 +48,10 @@ class TeamCreateView(
 
 
 class TeamUpdateView(
-    mixins.LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView,
+    mixins.LoginRequiredMixin,
+    mixins.UserPassesTestMixin,
+    SuccessMessageMixin,
+    generic.UpdateView,
 ):
     model = Team
     form_class = forms.TeamForm
@@ -58,9 +65,17 @@ class TeamUpdateView(
         form.instance.modified_by = self.request.user
         return super().form_valid(form)
 
+    def test_func(self):
+        team = self.get_object()
+        return team.leader_is(self.request.user)
+
 
 class TeamDeleteView(
-    mixins.LoginRequiredMixin, generic.DeleteView,
+    mixins.LoginRequiredMixin, mixins.UserPassesTestMixin, generic.DeleteView,
 ):
     model = Team
     success_url = "/teams"
+
+    def test_func(self):
+        team = self.get_object()
+        return team.leader_is(self.request.user)
