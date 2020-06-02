@@ -22,6 +22,7 @@ class ProjectComment(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.PROTECT)
     text = models.TextField(verbose_name="comment")
+
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     date_created = models.DateTimeField(auto_now_add=True)

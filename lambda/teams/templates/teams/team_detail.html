@@ -1,0 +1,36 @@
+{% extends 'base/base_detail.html' %}
+
+{% load duration_filters %}
+
+{% block title %}
+  <title>Team {{ team.id }} | Lambda</title>
+{% endblock title %}
+
+{% block nav %}
+  {% include 'teams/team_nav.html' %}
+{% endblock nav %}
+
+
+
+{% block cardContent %}
+  <div class="card-header">
+    <h2>#{{ team.id }}&emsp;{{ team.name }}</h2>
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <strong>Team leader:</strong>&emsp;{{ team.leader }}
+    </li>
+    <li class="list-group-item">
+      <strong>Team members:</strong>
+      <ul>
+        {% for member in team.members.all %}
+          <li>{{ member }}</li>
+        {% endfor %}
+      </ul>
+    </li>
+  </ul>
+  <div class="card-footer">
+    <a class="btn btn-primary" href="{% url 'team-update' team.id %}">Update</a>
+    <a class="btn btn-danger float-right" href="{% url 'team-delete' team.id %}">Delete</a>
+  </div>
+{% endblock cardContent %}

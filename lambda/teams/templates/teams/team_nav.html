@@ -1,0 +1,24 @@
+
+<a
+  href="{% url 'create-team' %}"
+  class="btn btn-outline-primary btn-block mb-3
+    {% if request.resolver_match.url_name == 'create-team'%}active{% endif %}">
+  New Team
+</a>
+
+<div class="card mb-3">
+  <nav class="nav nav-pills flex-md-column">
+    <a
+      href="{% url 'all-teams' %}"
+      class="nav-link
+        {% if request.resolver_match.url_name == 'all-teams'%}active{% endif %}">
+      All Teams
+    </a>
+    <a
+      href="{% url 'my-teams' %}"
+      class="nav-link
+        {% if request.resolver_match.url_name == 'my-teams'%}active{% endif %}">
+      My Teams
+    </a>
+  </nav>
+</div>

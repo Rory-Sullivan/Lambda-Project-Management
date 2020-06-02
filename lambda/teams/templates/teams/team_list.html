@@ -1,0 +1,31 @@
+{% extends 'base/base_list.html' %}
+
+{% block title %}
+  <title>Teams | Lambda</title>
+{% endblock title %}
+
+{% block nav %}
+  {% include "teams/team_nav.html" %}
+{% endblock nav %}
+
+{% block tableHeaders %}
+  <th class="sortHeader" data-sorted="true" data-table-id="sortTable1" data-col="0" data-type="number" scope="col">
+    #
+  </th>
+  <th class="sortHeader" data-sorted="false" data-table-id="sortTable1" data-col="1" data-type="text" scope="col">
+    Name
+  </th>
+  <th class="sortHeader" data-sorted="false" data-table-id="sortTable1" data-col="2" data-type="text" scope="col">
+    Leader
+  </th>
+{% endblock tableHeaders %}
+
+{% block tableBody %}
+  {% for team in object_list %}
+    <tr onclick="window.document.location='{% url 'team-detail' team.id %}';">
+      <th scope="row">{{ team.id }}</th>
+      <td>{{ team.name }}</td>
+      <td>{{ team.leader }}</td>
+    </tr>
+  {% endfor %}
+{% endblock tableBody %}
