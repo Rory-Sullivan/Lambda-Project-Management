@@ -21,6 +21,9 @@
       <strong>Team leader:</strong>&emsp;{{ team.leader }}
     </li>
     <li class="list-group-item">
+      <strong>Created by:</strong>&emsp;{{ team.created_by }}
+    </li>
+    <li class="list-group-item">
       <strong>Team members:</strong>
       <ul>
         {% for member in team.members.all %}
