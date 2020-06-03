@@ -12,7 +12,6 @@ class TaskForm(forms.ModelForm):
             "title",
             "description",
             "project",
-            "assigned_to",
             "priority_level",
             "estimated_duration",
             "date_due",
@@ -21,6 +20,12 @@ class TaskForm(forms.ModelForm):
             "estimated_duration": DurationWidget(),
             "date_due": DateWidget(),
         }
+
+
+class AssignTaskForm(forms.ModelForm):
+    class Meta:
+        model = models.Task
+        fields = ["assigned_to"]
 
 
 class CompleteTaskForm(forms.ModelForm):

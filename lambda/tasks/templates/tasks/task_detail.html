@@ -69,6 +69,7 @@
   </ul>
   <div class="card-footer">
     <a class="btn btn-primary" href="{% url 'task-update' task.id %}">Update</a>
+    <a class="btn btn-primary" href="{% url 'task-assign' task.id %}">Assign</a>
     {% if not task.completed %}
       <a class="btn btn-success" href="{% url 'task-complete' task.id %}">Complete</a>
     {% endif %}
