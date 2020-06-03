@@ -181,13 +181,17 @@ class TaskAssignToSelfView(
 
     def get_initial(self):
         initial_data = super().get_initial()
-        initial_data["assigned_to"] = self.request.user
+        initial_data["assigned_to"] = self.request.user.pk
         return initial_data
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.id,)
 
     def form_valid(self, form):
+        # There appears to be a bug in Django where setting the initial field to
+        # a models instance stops it from getting passed on when the field is
+        # disabled. hence we need to reset it here.
+        form.instance.assigned_to = self.request.user
         form.instance.modified_by = self.request.user
         return super().form_valid(form)
 
