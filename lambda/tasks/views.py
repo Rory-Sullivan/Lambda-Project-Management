@@ -86,6 +86,7 @@ class TaskCreateView(
         return self.success_message % dict(cleaned_data, id=self.object.id,)
 
     def form_valid(self, form):
+        form.instance.team = form.instance.project.team
         form.instance.created_by = self.request.user
         form.instance.modified_by = self.request.user
         return super().form_valid(form)

@@ -12,7 +12,6 @@ class TaskForm(forms.ModelForm):
             "title",
             "description",
             "project",
-            "team",
             "assigned_to",
             "priority_level",
             "estimated_duration",
