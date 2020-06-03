@@ -22,6 +22,11 @@ urlpatterns = [
         name="task-assign",
     ),
     path(
+        "task/<int:pk>/assign-to-self/",
+        views.TaskAssignToSelfView.as_view(),
+        name="task-assign-to-self",
+    ),
+    path(
         "task/<int:pk>/complete/",
         views.TaskCompleteView.as_view(),
         name="task-complete",

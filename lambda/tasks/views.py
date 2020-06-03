@@ -88,7 +88,10 @@ class TaskCreateView(
         return self.success_message % dict(cleaned_data, id=self.object.id,)
 
     def get_success_url(self):
-        return reverse("task-assign", kwargs={"pk": self.object.pk})
+        task = self.object
+        if task.team.leader == self.request.user:
+            return reverse("task-assign", kwargs={"pk": self.object.pk})
+        return super().get_success_url()
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -155,6 +158,44 @@ class TaskAssignView(
         user = self.request.user
 
         if task.is_team_leader(user):
+            return True
+        return False
+
+
+class TaskAssignToSelfView(
+    mixins.LoginRequiredMixin,
+    mixins.UserPassesTestMixin,
+    SuccessMessageMixin,
+    generic.UpdateView,
+):
+    model = Task
+    form_class = forms.AssignTaskForm
+
+    success_message = "Task #%(id)s was assigned successfully"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        task = context["object"]
+        context["form"].fields["assigned_to"].disabled = True
+        return context
+
+    def get_initial(self):
+        initial_data = super().get_initial()
+        initial_data["assigned_to"] = self.request.user
+        return initial_data
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message % dict(cleaned_data, id=self.object.id,)
+
+    def form_valid(self, form):
+        form.instance.modified_by = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        task = self.get_object()
+        user = self.request.user
+
+        if task.team_has_user(user):
             return True
         return False
 
