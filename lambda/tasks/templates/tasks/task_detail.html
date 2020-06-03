@@ -118,8 +118,11 @@
     {% elif task.assigned_to == None %}
       <a class="btn btn-primary" href="{% url 'task-assign-to-self' task.id %}">Assign to yourself</a>
     {% endif %}
+
     {% if not task.completed %}
-      <a class="btn btn-success" href="{% url 'task-complete' task.id %}">Complete</a>
+      {% if request.user == task.team.leader or request.user == task.assigned_to %}
+        <a class="btn btn-success" href="{% url 'task-complete' task.id %}">Complete</a>
+      {% endif %}
     {% endif %}
 
     {% if request.user == task.team.leader %}
