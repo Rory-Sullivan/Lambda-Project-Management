@@ -18,7 +18,11 @@ class TeamListView(mixins.LoginRequiredMixin, generic.ListView):
     model = Team
 
     def get_queryset(self):
-        return Team.objects.filter(members=self.request.user)
+        user = self.request.user
+        q1 = Team.objects.filter(members=user)
+        q2 = Team.objects.filter(created_by=user)
+
+        return q1.union(q2)
 
 
 class TeamDetailView(
@@ -28,7 +32,11 @@ class TeamDetailView(
 
     def test_func(self):
         team = self.get_object()
-        return team.has_member(self.request.user)
+        user = self.request.user
+
+        if team.was_created_by(user):
+            return True
+        return team.has_member(user)
 
 
 class TeamCreateView(
@@ -67,7 +75,11 @@ class TeamUpdateView(
 
     def test_func(self):
         team = self.get_object()
-        return team.leader_is(self.request.user)
+        user = self.request.user
+
+        if team.was_created_by(user):
+            return True
+        return team.leader_is(user)
 
 
 class TeamDeleteView(
@@ -78,4 +90,8 @@ class TeamDeleteView(
 
     def test_func(self):
         team = self.get_object()
-        return team.leader_is(self.request.user)
+        user = self.request.user
+
+        if team.was_created_by(user):
+            return True
+        return team.leader_is(user)
