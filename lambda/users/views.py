@@ -26,13 +26,11 @@ class UserDetailView(
     slug_field = "username"
 
     def test_func(self):
-        """Only users who share a team can view eachothers profiles"""
+        """Only users who share a team can view each others profiles"""
 
         target_user = self.get_object()
         request_user = self.request.user
 
-        for team in target_user.team_set.all():
-            if request_user in team.members.all():
-                return True
-
-        return False
+        if request_user.profile.is_manager:
+            return True
+        return request_user in target_user.profile.get_connections()

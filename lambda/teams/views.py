@@ -48,6 +48,11 @@ class TeamCreateView(
     form_class = forms.TeamForm
     success_message = "Team {name} was created successfully"
 
+    def get_form_kwargs(self):
+        kwargs = super(TeamCreateView, self).get_form_kwargs()
+        kwargs.update({"user": self.request.user})
+        return kwargs
+
     def get_success_message(self, cleaned_data):
         return self.success_message.format(name=cleaned_data.get("name"))
 
@@ -66,6 +71,11 @@ class TeamUpdateView(
     model = Team
     form_class = forms.TeamForm
     success_message = "Team {name} was updated successfully"
+
+    def get_form_kwargs(self):
+        kwargs = super(TeamUpdateView, self).get_form_kwargs()
+        kwargs.update({"user": self.request.user})
+        return kwargs
 
     def get_success_message(self, cleaned_data):
         print(cleaned_data)

@@ -63,7 +63,9 @@ class Task(models.Model):
 
     # Model validation
     def clean(self):
-        self.team = self.project.team
+
+        if hasattr(self, "project"):
+            self.team = self.project.team
 
         if self.assigned_to and self.assigned_to not in self.team.members.all():
             msg = """The user who this task is assigned to must be part of

@@ -83,6 +83,11 @@ class ProjectCreateView(
     form_class = forms.ProjectForm
     success_message = "Project #%(id)s was created successfully"
 
+    def get_form_kwargs(self):
+        kwargs = super(ProjectCreateView, self).get_form_kwargs()
+        kwargs.update({"user": self.request.user})
+        return kwargs
+
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.id,)
 
@@ -101,6 +106,11 @@ class ProjectUpdateView(
     model = Project
     form_class = forms.ProjectForm
     success_message = "Project #%(id)s was updated successfully"
+
+    def get_form_kwargs(self):
+        kwargs = super(ProjectUpdateView, self).get_form_kwargs()
+        kwargs.update({"user": self.request.user})
+        return kwargs
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.id,)
