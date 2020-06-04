@@ -34,6 +34,8 @@ class TeamDetailView(
         team = self.get_object()
         user = self.request.user
 
+        if user.profile.is_manager:
+            return True
         if team.was_created_by(user):
             return True
         return team.has_member(user)

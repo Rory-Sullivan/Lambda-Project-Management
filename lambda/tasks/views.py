@@ -62,7 +62,13 @@ class TaskDetailView(
 
     def test_func(self):
         task = self.get_object()
-        return task.team_has_user(self.request.user)
+        user = self.request.user
+
+        if user.profile.is_manager:
+            return True
+        if task.was_created_by(user):
+            return True
+        return task.team_has_member(self.request.user)
 
 
 class TaskDetailDisplay(generic.DetailView):
@@ -120,11 +126,11 @@ class TaskUpdateView(
         task = self.get_object()
         user = self.request.user
 
+        if task.was_created_by(user):
+            return True
         if task.is_assigned_to(user):
             return True
-        if task.is_team_leader(user):
-            return True
-        return False
+        return task.team_leader_is(user)
 
 
 class TaskAssignView(
@@ -157,9 +163,7 @@ class TaskAssignView(
         task = self.get_object()
         user = self.request.user
 
-        if task.is_team_leader(user):
-            return True
-        return False
+        return task.team_leader_is(user)
 
 
 class TaskAssignToSelfView(
@@ -199,9 +203,7 @@ class TaskAssignToSelfView(
         task = self.get_object()
         user = self.request.user
 
-        if task.team_has_user(user):
-            return True
-        return False
+        return task.team_has_member(user)
 
 
 class TaskCompleteView(
@@ -230,11 +232,11 @@ class TaskCompleteView(
         task = self.get_object()
         user = self.request.user
 
+        if task.was_created_by(user):
+            return True
         if task.is_assigned_to(user):
             return True
-        if task.is_team_leader(user):
-            return True
-        return False
+        return task.team_leader_is(user)
 
 
 class TaskDeleteView(
@@ -247,4 +249,6 @@ class TaskDeleteView(
         task = self.get_object()
         user = self.request.user
 
-        return task.is_team_leader(user)
+        if task.was_created_by(user):
+            return True
+        return task.team_leader_is(user)

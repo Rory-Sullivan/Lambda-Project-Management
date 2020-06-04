@@ -50,3 +50,6 @@ class Project(models.Model):
 
     def leader_is(self, user):
         return user == self.team.leader
+
+    def was_created_by(self, user):
+        return user == self.created_by

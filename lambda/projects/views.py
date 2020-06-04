@@ -59,6 +59,11 @@ class ProjectDetailView(
     def test_func(self):
         project = self.get_object()
         user = self.request.user
+
+        if user.profile.is_manager:
+            return True
+        if project.was_created_by(user):
+            return True
         return project.team_has_member(user)
 
 
@@ -107,6 +112,9 @@ class ProjectUpdateView(
     def test_func(self):
         project = self.get_object()
         user = self.request.user
+
+        if project.was_created_by(user):
+            return True
         return project.leader_is(user)
 
 
@@ -135,6 +143,9 @@ class ProjectCompleteView(
     def test_func(self):
         project = self.get_object()
         user = self.request.user
+
+        if project.was_created_by(user):
+            return True
         return project.leader_is(user)
 
 
@@ -147,4 +158,7 @@ class ProjectDeleteView(
     def test_func(self):
         project = self.get_object()
         user = self.request.user
+
+        if project.was_created_by(user):
+            return True
         return project.leader_is(user)

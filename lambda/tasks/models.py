@@ -72,10 +72,10 @@ class Task(models.Model):
             raise ValidationError(msg)
 
     # Authorization tests
-    def team_has_user(self, user):
+    def team_has_member(self, user):
         return user in self.team.members.all()
 
-    def is_team_leader(self, user):
+    def team_leader_is(self, user):
         return user == self.team.leader
 
     def is_assigned_to(self, user):
