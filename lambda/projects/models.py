@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.db import models
 from django.shortcuts import reverse
 from django.contrib.auth.models import User
@@ -30,6 +32,11 @@ class Project(models.Model):
         blank=True,
         related_name="completed_projects",
     )  # Set to current user on form validation
+
+    @property
+    def days_till_due(self):
+        difference = self.date_due - date.today()
+        return difference.days
 
     def __str__(self):
         return self.name

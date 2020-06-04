@@ -1,0 +1,65 @@
+{# To be included in team detail view with a context of project_list containing Projects relevant to that team #}
+{% load static %}
+
+<div class="row justify-content-between no-gutters mb-3">
+  <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target=".collabsible" aria-expanded="false" aria-controls="collapseTable1">View Projects</button>
+  <div class="col-md-4 align-self-end collapse collabsible">
+    <input type="search" class="searchInput form-control" data-table-id="sortTable1" placeholder="Search" aria-label="Search">
+  </div>
+</div>
+
+<div class="collapse collabsible">
+  <table id="sortTable1" class="table table-hover">
+    <thead>
+      <tr>
+        <th class="sortHeader" data-sorted="true" data-table-id="sortTable1" data-col="0" data-type="number"
+          scope="col">
+          #
+        </th>
+        <th class="sortHeader" data-sorted="false" data-table-id="sortTable1" data-col="1" data-type="text" scope="col">
+          Name
+        </th>
+        <th class="sortHeader" data-sorted="false" data-table-id="sortTable1" data-col="2" data-type="number" scope="col">
+          Due in
+        </th>
+        <th class="d-none" data-sorted="false" data-table-id="sortTable1" data-col="3" data-type="text"
+          scope="col">
+          Status
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for project in project_list %}
+        <tr onclick="window.document.location='{% url 'project-detail' project.id %}';"
+          {% if project.completed %}class="table-success" {% endif %}>
+          <th scope="row">{{ project.id }}</th>
+          <td>{{ project.name }}</td>
+
+          {% if project.days_till_due > 7 %}
+            <td class="text-success" data-sort-value="{{ project.days_till_due }}">
+              {{ project.days_till_due }}&nbsp;days
+            </td>
+          {% elif project.days_till_due > 0 and project.days_till_due <= 7 %}
+            <td class="text-warning" data-sort-value="{{ project.days_till_due }}">
+              {{ project.days_till_due }}&nbsp;days
+            </td>
+          {% else %}
+            <td class="text-danger" data-sort-value="{{ project.days_till_due }}">
+              {{ project.days_till_due }}&nbsp;days
+            </td>
+          {% endif %}
+
+          <td class="d-none">
+            {% if project.completed %}
+              Completed
+            {% else %}
+              In Progress
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script src="{% static 'base/tableFunctions.js' %}"></script>

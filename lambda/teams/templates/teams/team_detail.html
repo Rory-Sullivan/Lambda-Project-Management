@@ -16,24 +16,53 @@
   <div class="card-header">
     <h2>#{{ team.id }}&emsp;{{ team.name }}</h2>
   </div>
-  <ul class="list-group">
+
+  <ul class="list-group list-group-flush">
     <li class="list-group-item">
-      <strong>Team leader:</strong>&emsp;{{ team.leader }}
-    </li>
-    <li class="list-group-item">
-      <strong>Created by:</strong>&emsp;{{ team.created_by }}
+      <strong>Team leader:</strong>&emsp;
+      <a href="{% url 'profile' team.leader %}">{{ team.leader }}</a>
     </li>
     <li class="list-group-item">
       <strong>Team members:</strong>
       <ul>
         {% for member in team.members.all %}
-          <li>{{ member }}</li>
+          <li><a href="{% url 'profile' member %}">{{ member }}</a></li>
         {% endfor %}
       </ul>
     </li>
   </ul>
+
+  <div class="d-flex border-bottom">
+    <div class="col-6" style="padding: 0.75rem 1.25rem">
+      <strong>Date created:</strong>&emsp;{{ team.date_created }}
+    </div>
+    <div class="col-6 border-left" style="padding: 0.75rem 1.25rem">
+      <strong>Created by:</strong>&emsp;
+      <a href="{% url 'profile' team.created_by %}">{{ team.created_by }}</a>
+    </div>
+  </div>
+
+  <div class="d-flex">
+    <div class="col-6" style="padding: 0.75rem 1.25rem">
+      <strong>Last modified:</strong>&emsp;{{ team.date_modified }}
+    </div>
+    <div class="col-6 border-left" style="padding: 0.75rem 1.25rem">
+      <strong>Modified by:</strong>&emsp;<a href="{% url 'profile' team.modified_by %}">{{ team.modified_by }}</a>
+    </div>
+  </div>
+
   <div class="card-footer">
-    <a class="btn btn-primary" href="{% url 'team-update' team.id %}">Update</a>
-    <a class="btn btn-danger float-right" href="{% url 'team-delete' team.id %}">Delete</a>
+    {% if request.user == team.leader or request.user == team.created_by %}
+      <a class="btn btn-primary" href="{% url 'team-update' team.id %}">Update</a>
+      <a class="btn btn-danger float-right" href="{% url 'team-delete' team.id %}">Delete</a>
+    {% else %}
+      <small class="text-muted">You do not have permission to edit this team</small>
+    {% endif %}
   </div>
 {% endblock cardContent %}
+
+{% block tasks %}
+  {% with team.project_set.all as project_list %}
+    {% include 'teams/team_project_list.html' %}
+  {% endwith %}
+{% endblock tasks %}
