@@ -18,20 +18,20 @@
   </div>
 
   <div class="d-flex border-bottom">
-    <div class="flex-fill" style="padding: 0.75rem 1.25rem">
+    <div class="col-4" style="padding: 0.75rem 1.25rem">
       <strong>Project:</strong>&emsp;
       <a href="{% url 'project-detail' task.project.id %}">{{ task.project }}</a>
     </div>
-    <div class="flex-fill border-left" style="padding: 0.75rem 1.25rem">
+    <div class="col-4 border-left" style="padding: 0.75rem 1.25rem">
       <strong>Team:</strong>&emsp;
       <a href="{% url 'team-detail' task.team.id %}">{{ task.team }}</a>
     </div>
-    <div class="flex-fill border-left" style="padding: 0.75rem 1.25rem">
+    <div class="col-4 border-left" style="padding: 0.75rem 1.25rem">
       <strong>Assigned to:</strong>&emsp;
       {% if task.assigned_to %}
         <a href="{% url 'profile' task.assigned_to %}">{{ task.assigned_to }}</a>
       {% else %}
-        Unassigned
+        <div class="text-danger">Unassigned</div>
       {% endif %}
     </div>
   </div>
@@ -65,20 +65,20 @@
   </ul>
 
   <div class="d-flex border-bottom">
-    <div class="flex-fill" style="padding: 0.75rem 1.25rem">
+    <div class="col-6" style="padding: 0.75rem 1.25rem">
       <strong>Date created:</strong>&emsp;{{ task.date_created }}
     </div>
-    <div class="flex-fill border-left" style="padding: 0.75rem 1.25rem">
+    <div class="col-6 border-left" style="padding: 0.75rem 1.25rem">
       <strong>Created by:</strong>&emsp;
       <a href="{% url 'profile' task.created_by %}">{{ task.created_by }}</a>
     </div>
   </div>
 
   <div class="d-flex border-bottom">
-    <div class="flex-fill" style="padding: 0.75rem 1.25rem">
+    <div class="col-6" style="padding: 0.75rem 1.25rem">
       <strong>Last modified:</strong>&emsp;{{ task.date_modified }}
     </div>
-    <div class="flex-fill border-left" style="padding: 0.75rem 1.25rem">
+    <div class="col-6 border-left" style="padding: 0.75rem 1.25rem">
       <strong>Modified by:</strong>&emsp;<a href="{% url 'profile' task.modified_by %}">{{ task.modified_by }}</a>
     </div>
   </div>
@@ -91,13 +91,13 @@
 
   <div class="d-flex">
     {% if task.completed %}
-      <div class="flex-fill list-group-item-success" style="padding: 0.75rem 1.25rem">
+      <div class="col-4 list-group-item-success" style="padding: 0.75rem 1.25rem">
         <strong>Status:</strong>&emsp;Completed
       </div>
-      <div class="flex-fill list-group-item-success border-left" style="padding: 0.75rem 1.25rem">
+      <div class="col-4 list-group-item-success border-left" style="padding: 0.75rem 1.25rem">
         <strong>Date completed:</strong>&emsp;{{ task.date_completed }}
       </div>
-      <div class="flex-fill list-group-item-success border-left" style="padding: 0.75rem 1.25rem">
+      <div class="col-4 list-group-item-success border-left" style="padding: 0.75rem 1.25rem">
         <strong>Completed by:</strong>&emsp;<a href="{% url 'profile' task.completed_by %}">{{ task.completed_by }}</a>
       </div>
     {% else %}
@@ -109,25 +109,29 @@
   </div>
   <div class="card-footer">
 
-    {% if request.user == task.team.leader or request.user == task.assigned_to %}
+    {% if request.user == task.team.leader or request.user == task.assigned_to or request.user == task.created_by %}
       <a class="btn btn-primary" href="{% url 'task-update' task.id %}">Update</a>
-    {% endif %}
 
-    {% if request.user == task.team.leader %}
-      <a class="btn btn-primary" href="{% url 'task-assign' task.id %}">Assign</a>
-    {% elif task.assigned_to == None %}
-      <a class="btn btn-primary" href="{% url 'task-assign-to-self' task.id %}">Assign to yourself</a>
-    {% endif %}
+      {% if request.user == task.team.leader %}
+        <a class="btn btn-primary" href="{% url 'task-assign' task.id %}">Assign</a>
+      {% elif task.assigned_to == None and request.user in task.team.members.all %}
+        <a class="btn btn-primary" href="{% url 'task-assign-to-self' task.id %}">Assign to yourself</a>
+      {% endif %}
 
-    {% if not task.completed %}
-      {% if request.user == task.team.leader or request.user == task.assigned_to %}
+      {% if not task.completed %}
         <a class="btn btn-success" href="{% url 'task-complete' task.id %}">Complete</a>
       {% endif %}
+
+      {% if request.user == task.team.leader or request.user == task.created_by %}
+        <a class="btn btn-danger float-right" href="{% url 'task-delete' task.id %}">Delete</a>
+      {% endif %}
+
+    {% elif task.assigned_to == None and request.user in task.team.members.all %}
+      <a class="btn btn-primary" href="{% url 'task-assign-to-self' task.id %}">Assign to yourself</a>
+    {% else %}
+      <small class="text-muted">You do not have permission to edit this task.</small>
     {% endif %}
 
-    {% if request.user == task.team.leader %}
-      <a class="btn btn-danger float-right" href="{% url 'task-delete' task.id %}">Delete</a>
-    {% endif %}
 
   </div>
 {% endblock cardContent %}
