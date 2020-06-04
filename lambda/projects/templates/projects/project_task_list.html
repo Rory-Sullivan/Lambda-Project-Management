@@ -41,7 +41,12 @@
           {% if task.completed %}class="table-success" {% endif %}>
           <th scope="row">{{ task.id }}</th>
           <td>{{ task.title }}</td>
-          <td>{{ task.assigned_to_user }}</td>
+
+          {% if task.assigned_to %}
+            <td>{{ task.assigned_to }}</td>
+          {% else %}
+            <td class="text-danger">Unassigned</td>
+          {% endif %}
 
           {% if task.priority_level <= 3 %}
             <td class="text-success" data-sort-value="{{ task.priority_level }}">
