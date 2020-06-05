@@ -102,7 +102,7 @@ function searchTable(tableId, value) {
 const searchInputs = document.getElementsByClassName("searchInput");
 
 Array.from(searchInputs).forEach(input => {
-  input.addEventListener('keyup', (event) => {
+  input.addEventListener('input', (event) => {
     const target = event.target;
     const targetTableId = target.dataset.tableId;
     const value = target.value;
