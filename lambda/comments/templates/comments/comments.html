@@ -22,7 +22,7 @@
     {% endif %}
 
     <li class="list-group-item">
-      <form method="post" novalidate>
+      <form method="post">
         {% csrf_token %}
 
         {{ form|crispy }}

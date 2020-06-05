@@ -23,7 +23,7 @@
   {% endif %}
   </div>
   <div class="card-body">
-    <form method="post" novalidate>
+    <form method="post">
       {% csrf_token %}
 
       {{ form|crispy }}
