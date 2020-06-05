@@ -11,6 +11,7 @@ from comments import views as comment_views
 
 from . import forms
 from .models import Task
+from projects.models import Project
 
 
 class TaskListView(mixins.LoginRequiredMixin, generic.ListView):
@@ -42,6 +43,20 @@ class CompletedTaskListView(mixins.LoginRequiredMixin, generic.ListView):
         return Task.objects.filter(assigned_to=self.request.user).filter(
             completed=True
         )
+
+
+class UnassignedTaskListView(mixins.LoginRequiredMixin, generic.ListView):
+    """Shows a list of tasks from projects where the user is the leader."""
+
+    model = Task
+
+    def get_queryset(self):
+        q = Task.objects.none()
+
+        for project in Project.objects.filter(team__leader=self.request.user):
+            q = q | project.task_set.filter(assigned_to=None)
+
+        return q.distinct()
 
 
 class TaskDetailView(

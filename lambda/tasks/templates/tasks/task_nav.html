@@ -31,3 +31,17 @@
     </a>
   </nav>
 </div>
+
+<div class="card mb-3">
+  <div class="card-header text-center">
+    <strong>Manage tasks</strong>
+  </div>
+  <nav class="nav nav-pills flex-md-column">
+    <a
+      href="{% url 'unassigned-tasks' %}"
+      class="nav-link
+        {% if request.resolver_match.url_name == 'unassigned-tasks'%}active{% endif %}">
+      Unassigned
+    </a>
+  </nav>
+</div>

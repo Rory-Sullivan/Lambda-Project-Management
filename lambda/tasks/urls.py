@@ -9,6 +9,11 @@ urlpatterns = [
         views.CompletedTaskListView.as_view(),
         name="completed-tasks",
     ),
+    path(
+        "unassigned/",
+        views.UnassignedTaskListView.as_view(),
+        name="unassigned-tasks",
+    ),
     path("create/", views.TaskCreateView.as_view(), name="create-task"),
     path("task/<int:pk>/", views.TaskDetailView.as_view(), name="task-detail"),
     path(
