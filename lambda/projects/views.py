@@ -196,6 +196,3 @@ class ProjectAddTaskView(TaskCreateView):
         return self.success_message.format(
             task_id=self.object.id, project_id=self.kwargs["pk"]
         )
-
-    def get_success_url(self):
-        return reverse("project-detail", args=[self.kwargs["pk"]])
