@@ -11,11 +11,11 @@ class Team(models.Model):
     )
     members = models.ManyToManyField(User)
 
-    date_created = models.DateField(auto_now_add=True)
+    date_created = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name="created_teams"
     )  # Set to current user at form validation
-    date_modified = models.DateField(auto_now=True)
+    date_modified = models.DateTimeField(auto_now=True)
     modified_by = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name="modified_teams"
     )  # Set to current user at form validation
