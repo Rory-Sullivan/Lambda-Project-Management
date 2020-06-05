@@ -35,8 +35,10 @@ class Project(models.Model):
 
     @property
     def days_till_due(self):
-        difference = self.date_due - date.today()
-        return difference.days
+        if self.date_due:
+            difference = self.date_due - date.today()
+            return difference.days
+        return None
 
     def __str__(self):
         return self.name

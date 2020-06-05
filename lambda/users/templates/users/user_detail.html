@@ -12,10 +12,7 @@
     <p>
       Name:&emsp;{{ user.first_name}} {{ user.last_name }}
     </p>
-    <p>
-      Email:&emsp;{{ user.email }}
-    </p>
-    {% if user.profile.is_team_leader %}
+    {% if user.profile.is_manager %}
       <p>
         Status:&emsp;Manager
       </p>
@@ -25,6 +22,10 @@
 
 {% block belowCard %}
   {% with user.task_set.all as task_list %}
-    {% include 'users/user_task_list.html' %}
+    {% with user.project_set.all as project_list %}
+      {% with user.team_set.all as team_list %}
+        {% include 'users/user_task_list.html' %}
+      {% endwith %}
+    {% endwith %}
   {% endwith %}
 {% endblock belowCard %}

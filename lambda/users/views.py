@@ -20,13 +20,13 @@ class UserDetailView(
     mixins.LoginRequiredMixin, mixins.UserPassesTestMixin, generic.DetailView,
 ):
     model = User
-    permission_required = "users.view_user"
     template_name = "users/user_detail.html"
     slug_url_kwarg = "username"
     slug_field = "username"
 
     def test_func(self):
-        """Only users who share a team can view each others profiles"""
+        """Only users who share a team or have manager access can view a profile
+        """
 
         target_user = self.get_object()
         request_user = self.request.user
