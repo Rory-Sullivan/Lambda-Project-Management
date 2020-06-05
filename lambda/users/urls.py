@@ -14,5 +14,9 @@ urlpatterns = [
         name="logout",
     ),
     path("register/", views.UserCreateView.as_view(), name="register"),
-    path("<str:username>/", views.UserDetailView.as_view(), name="profile",),
+    path(
+        "view/<str:username>/", views.UserDetailView.as_view(), name="profile"
+    ),
+    path("update/", views.UserUpdateView.as_view(), name="profile-update"),
+    path("delete/", views.UserDeleteView.as_view(), name="profile-delete"),
 ]

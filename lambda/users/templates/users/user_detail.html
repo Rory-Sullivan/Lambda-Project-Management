@@ -18,6 +18,13 @@
       </p>
     {% endif %}
   </div>
+
+  {% if request.user == user%}
+    <div class="card-footer">
+      <a class="btn btn-primary" href="{% url 'profile-update' %}">Update</a>
+      <a class="btn btn-danger float-right" href="{% url 'profile-delete' %}">Delete</a>
+    </div>
+  {% endif %}
 {% endblock cardContent %}
 
 {% block belowCard %}

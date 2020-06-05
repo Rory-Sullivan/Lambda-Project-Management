@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import mixins
 from django.views import generic
 from . import forms
@@ -13,7 +13,9 @@ class UserCreateView(SuccessMessageMixin, generic.CreateView):
     success_message = (
         "You're account was successfully created you can now login."
     )
-    success_url = "/users/login/"
+
+    def get_success_url(self):
+        return reverse("login")
 
 
 class UserDetailView(
@@ -34,3 +36,28 @@ class UserDetailView(
         if request_user.profile.is_manager:
             return True
         return request_user in target_user.profile.get_connections()
+
+
+class UserUpdateView(mixins.LoginRequiredMixin, generic.UpdateView):
+    model = User
+    fields = ["first_name", "last_name"]
+    template_name = "users/user_update.html"
+
+    def get_object(self, queryset=None):
+        user_pk = self.request.user.pk
+        return User.objects.get(pk=user_pk)
+
+    def get_success_url(self):
+        return reverse("profile", args=[self.request.user.username])
+
+
+class UserDeleteView(mixins.LoginRequiredMixin, generic.DeleteView):
+    model = User
+    template_name = "users/user_confirm_delete.html"
+
+    def get_object(self, queryset=None):
+        user_pk = self.request.user.pk
+        return User.objects.get(pk=user_pk)
+
+    def get_success_url(self):
+        return reverse("home")
