@@ -32,4 +32,9 @@ urlpatterns = [
         views.ProjectDeleteView.as_view(),
         name="project-delete",
     ),
+    path(
+        "project/<int:pk>/addtask/",
+        views.ProjectAddTaskView.as_view(),
+        name="project-add-task",
+    ),
 ]

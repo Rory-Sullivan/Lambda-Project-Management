@@ -1,12 +1,16 @@
-from django.shortcuts import render
+from datetime import date
+
 from django.contrib.auth import mixins
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views import generic, View
+from django.shortcuts import reverse
+from django.views import View, generic
+
 from comments import forms as comment_forms
 from comments import views as comment_views
-from .models import Project
-from datetime import date
+from tasks.views import TaskCreateView
+
 from . import forms
+from .models import Project
 
 
 class ProjectListView(mixins.LoginRequiredMixin, generic.ListView):
@@ -172,3 +176,26 @@ class ProjectDeleteView(
         if project.was_created_by(user):
             return True
         return project.leader_is(user)
+
+
+class ProjectAddTaskView(TaskCreateView):
+    success_message = (
+        "Task #{task_id} was successfully added to project #{project_id}."
+    )
+
+    def get_initial(self):
+        initial = super().get_initial()
+
+        project_pk = self.kwargs["pk"]
+        # project = Project.objects.get(pk=project_pk)
+
+        initial["project"] = project_pk
+        return initial
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message.format(
+            task_id=self.object.id, project_id=self.kwargs["pk"]
+        )
+
+    def get_success_url(self):
+        return reverse("project-detail", args=[self.kwargs["pk"]])
