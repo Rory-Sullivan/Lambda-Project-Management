@@ -21,9 +21,13 @@
 {% endblock tableHeaders %}
 
 {% block tableBody %}
+  <!-- We add a rotation of 0 to table rows so that the strechted links apply to the appropriate area. -->
   {% for team in object_list %}
-    <tr onclick="window.document.location='{% url 'team-detail' team.id %}';">
-      <th scope="row">{{ team.id }}</th>
+    <tr style="transform: rotate(0);">
+      <th scope="row">
+        <a href="{% url 'team-detail' team.id %}" class="stretched-link"></a>
+        {{ team.id }}
+      </th>
       <td>{{ team.name }}</td>
       <td>{{ team.leader }}</td>
     </tr>

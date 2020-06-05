@@ -29,9 +29,9 @@
 
 {% block belowCard %}
   {% with user.task_set.all as task_list %}
-    {% with user.project_set.all as project_list %}
+    {% with user.profile.get_related_projects as project_list %}
       {% with user.team_set.all as team_list %}
-        {% include 'users/user_task_list.html' %}
+        {% include 'users/user_objects_lists.html' %}
       {% endwith %}
     {% endwith %}
   {% endwith %}

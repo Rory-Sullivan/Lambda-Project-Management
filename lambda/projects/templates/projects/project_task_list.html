@@ -36,10 +36,13 @@
       </tr>
     </thead>
     <tbody>
+      <!-- We add a rotation of 0 to table rows so that the strechted links apply to the appropriate area. -->
       {% for task in task_list %}
-        <tr onclick="window.document.location='{% url 'task-detail' task.id %}';"
-          {% if task.completed %}class="table-success" {% endif %}>
-          <th scope="row">{{ task.id }}</th>
+        <tr {% if task.completed %}class="table-success" {% endif %} style="transform: rotate(0);">
+          <th scope="row">
+            <a href="{% url 'task-detail' task.id %}" class="stretched-link"></a>
+            {{ task.id }}
+          </th>
           <td>{{ task.title }}</td>
 
           {% if task.assigned_to %}

@@ -29,10 +29,13 @@
       </tr>
     </thead>
     <tbody>
+      <!-- We add a rotation of 0 to table rows so that the strechted links apply to the appropriate area. -->
       {% for project in project_list %}
-        <tr onclick="window.document.location='{% url 'project-detail' project.id %}';"
-          {% if project.completed %}class="table-success" {% endif %}>
-          <th scope="row">{{ project.id }}</th>
+        <tr {% if project.completed %}class="table-success" {% endif %} style="transform: rotate(0);">
+          <th scope="row">
+            <a href="{% url 'project-detail' project.id %}" class="stretched-link"></a>
+            {{ project.id }}
+          </th>
           <td>{{ project.name }}</td>
 
           {% if project.days_till_due > 7 %}

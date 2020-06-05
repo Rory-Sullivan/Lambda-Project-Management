@@ -22,13 +22,16 @@
 {% endblock tableHeaders %}
 
 {% block tableBody %}
+  <!-- We add a rotation of 0 to table rows so that the strechted links apply to the appropriate area. -->
   {% for project in object_list %}
-  <tr onclick="window.document.location='{% url 'project-detail' project.id %}';"
-    {% if project.completed %}class="table-success" {% endif %}>
-    <th scope="row">{{ project.id }}</th>
-    <td>{{ project.name }}</td>
-    <td>{{ project.date_due }}</td>
-    <td>{{ task.assigned_to_user }}</td>
-  </tr>
+    <tr {% if project.completed %}class="table-success" {% endif %} style="transform: rotate(0);">
+      <th scope="row">
+        <a href="{% url 'project-detail' project.id %}" class="stretched-link"></a>
+        {{ project.id }}
+      </th>
+      <td>{{ project.name }}</td>
+      <td>{{ project.date_due }}</td>
+      <td>{{ task.assigned_to_user }}</td>
+    </tr>
   {% endfor %}
 {% endblock tableBody %}
