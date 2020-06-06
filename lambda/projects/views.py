@@ -180,6 +180,8 @@ class ProjectDeleteView(
         project = self.get_object()
         user = self.request.user
 
+        if user.profile.is_demo_user:
+            return False
         if project.was_created_by(user):
             return True
         return project.leader_is(user)

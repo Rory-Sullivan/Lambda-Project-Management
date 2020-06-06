@@ -38,7 +38,9 @@ class UserDetailView(
         return request_user in target_user.profile.get_connections()
 
 
-class UserUpdateView(mixins.LoginRequiredMixin, generic.UpdateView):
+class UserUpdateView(
+    mixins.LoginRequiredMixin, mixins.UserPassesTestMixin, generic.UpdateView
+):
     model = User
     fields = ["first_name", "last_name"]
     template_name = "users/user_update.html"
@@ -50,8 +52,13 @@ class UserUpdateView(mixins.LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         return reverse("profile", args=[self.request.user.username])
 
+    def test_func(self):
+        return not self.request.user.profile.is_demo_user
 
-class UserDeleteView(mixins.LoginRequiredMixin, generic.DeleteView):
+
+class UserDeleteView(
+    mixins.LoginRequiredMixin, mixins.UserPassesTestMixin, generic.DeleteView
+):
     model = User
     template_name = "users/user_confirm_delete.html"
 
@@ -61,3 +68,6 @@ class UserDeleteView(mixins.LoginRequiredMixin, generic.DeleteView):
 
     def get_success_url(self):
         return reverse("home")
+
+    def test_func(self):
+        return not self.request.user.profile.is_demo_user

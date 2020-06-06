@@ -104,6 +104,8 @@ class TeamDeleteView(
         team = self.get_object()
         user = self.request.user
 
+        if user.profile.is_demo_user:
+            return False
         if team.was_created_by(user):
             return True
         return team.leader_is(user)

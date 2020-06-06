@@ -286,6 +286,8 @@ class TaskDeleteView(
         task = self.get_object()
         user = self.request.user
 
+        if user.profile.is_demo_user:
+            return False
         if task.was_created_by(user):
             return True
         return task.team_leader_is(user)
