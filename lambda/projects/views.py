@@ -76,7 +76,9 @@ class ProjectDetailDisplay(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["form"] = comment_forms.ProjectCommentForm()
+        context["form"] = comment_forms.ProjectCommentForm(
+            user=self.request.user
+        )
         return context
 
 
@@ -88,7 +90,7 @@ class ProjectCreateView(
     success_message = "Project #%(id)s was created successfully"
 
     def get_form_kwargs(self):
-        kwargs = super(ProjectCreateView, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs.update({"user": self.request.user})
         return kwargs
 
@@ -112,7 +114,7 @@ class ProjectUpdateView(
     success_message = "Project #%(id)s was updated successfully"
 
     def get_form_kwargs(self):
-        kwargs = super(ProjectUpdateView, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs.update({"user": self.request.user})
         return kwargs
 
@@ -144,6 +146,11 @@ class ProjectCompleteView(
         "date_completed": date.today(),
     }
     success_message = "Project #%(id)s completed"
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({"user": self.request.user})
+        return kwargs
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.id,)

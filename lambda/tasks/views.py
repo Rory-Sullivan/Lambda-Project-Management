@@ -91,7 +91,7 @@ class TaskDetailDisplay(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["form"] = comment_forms.TaskCommentForm()
+        context["form"] = comment_forms.TaskCommentForm(user=self.request.user)
         return context
 
 
@@ -103,7 +103,7 @@ class TaskCreateView(
     success_message = "Task #%(id)s was created successfully"
 
     def get_form_kwargs(self):
-        kwargs = super(TaskCreateView, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs.update({"user": self.request.user})
         return kwargs
 
@@ -133,7 +133,7 @@ class TaskUpdateView(
     success_message = "Task #%(id)s was updated successfully"
 
     def get_form_kwargs(self):
-        kwargs = super(TaskUpdateView, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs.update({"user": self.request.user})
         return kwargs
 
@@ -165,6 +165,11 @@ class TaskAssignView(
     form_class = forms.AssignTaskForm
 
     success_message = "Task #%(id)s was assigned successfully"
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({"user": self.request.user})
+        return kwargs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -198,6 +203,11 @@ class TaskAssignToSelfView(
     form_class = forms.AssignTaskForm
 
     success_message = "Task #%(id)s was assigned successfully"
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({"user": self.request.user})
+        return kwargs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -243,6 +253,11 @@ class TaskCompleteView(
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.id,)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({"user": self.request.user})
+        return kwargs
 
     def form_valid(self, form):
         form.instance.completed = True

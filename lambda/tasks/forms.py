@@ -7,9 +7,10 @@ from django.core.exceptions import ValidationError
 from base.widgets import DateWidget, DurationWidget
 
 from . import models
+from base import custom_forms
 
 
-class TaskForm(forms.ModelForm):
+class TaskForm(custom_forms.CustomModelForm):
     class Meta:
         model = models.Task
         fields = [
@@ -26,14 +27,13 @@ class TaskForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop("user", None)
-        self.request_user = user
-        super(TaskForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
+
+        user = self.request_user
 
         if not user.profile.is_manager:
-            self.fields[
-                "project"
-            ].queryset = user.profile.get_related_projects()
+            q = user.profile.get_related_projects()
+            self.fields["project"].queryset = q
 
     def clean_project(self):
         project = self.cleaned_data["project"]
@@ -49,13 +49,13 @@ class TaskForm(forms.ModelForm):
         return project
 
 
-class AssignTaskForm(forms.ModelForm):
+class AssignTaskForm(custom_forms.CustomModelForm):
     class Meta:
         model = models.Task
         fields = ["assigned_to"]
 
 
-class CompleteTaskForm(forms.ModelForm):
+class CompleteTaskForm(custom_forms.CustomModelForm):
     class Meta:
         model = models.Task
         fields = [

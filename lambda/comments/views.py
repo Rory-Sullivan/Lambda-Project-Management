@@ -18,6 +18,11 @@ class PostTaskComment(
         self.object = self.get_object()
         return super().post(request, *args, **kwargs)
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({"user": self.request.user})
+        return kwargs
+
     def form_valid(self, form):
         form.instance.author = self.request.user
         form.instance.task = self.object
@@ -40,6 +45,11 @@ class PostProjectComment(
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().post(request, *args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({"user": self.request.user})
+        return kwargs
 
     def form_valid(self, form):
         form.instance.author = self.request.user

@@ -1,10 +1,13 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from . import models
+
+from base import custom_forms
 from base.widgets import DateWidget
 
+from . import models
 
-class ProjectForm(forms.ModelForm):
+
+class ProjectForm(custom_forms.CustomModelForm):
     class Meta:
         model = models.Project
         fields = [
@@ -18,9 +21,9 @@ class ProjectForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop("user", None)
-        self.request_user = user
-        super(ProjectForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
+
+        user = self.request_user
 
         if not user.profile.is_manager:
             q1 = user.team_set.all()
@@ -43,7 +46,7 @@ class ProjectForm(forms.ModelForm):
         return team
 
 
-class CompleteProjectForm(forms.ModelForm):
+class CompleteProjectForm(custom_forms.CustomModelForm):
     class Meta:
         model = models.Project
         fields = [
