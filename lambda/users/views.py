@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect, reverse
-from django.contrib.auth import mixins
-from django.views import generic
-from . import forms
-from django.contrib.messages.views import SuccessMessageMixin
+from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, mixins
 from django.contrib.auth.models import User
+from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import redirect, render, reverse
+from django.views import generic
+
+from . import forms
 
 
 class UserCreateView(SuccessMessageMixin, generic.CreateView):
@@ -71,3 +74,29 @@ class UserDeleteView(
 
     def test_func(self):
         return not self.request.user.profile.is_demo_user
+
+
+def demo_user_login_view(request):
+    if request.method == "POST":
+        user = authenticate(
+            request,
+            username=settings.DEMO_USER_USERNAME,
+            password=settings.DEMO_USER_PASSWORD,
+        )
+
+        if user is not None:
+            if user.profile.is_demo_user:
+                login(request, user)
+                return redirect(settings.LOGIN_REDIRECT_URL)
+
+            else:
+                msg = (
+                    "The user you have provided is not a demo user. Please "
+                    + "set a different demo user in your settings or change "
+                    + "the current user to a demo user."
+                )
+                raise PermissionError(msg)
+
+        messages.error(request, "Username or password not correct.")
+
+    return render(request, template_name="users/login_demo_user.html")

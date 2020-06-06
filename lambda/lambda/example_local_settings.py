@@ -38,3 +38,9 @@ SESSION_COOKIE_SECURE = False
 #         'HOST': '<your_mysql_hostname>',
 #     }
 # }
+
+# Settings for a demo user that people can use without registering for their own
+# account.  This user should be set up using an admin account and MUST have the
+# profile.is_demo_user set to true.
+DEMO_USER_USERNAME = "User name here"
+DEMO_USER_PASSWORD = "Password here"

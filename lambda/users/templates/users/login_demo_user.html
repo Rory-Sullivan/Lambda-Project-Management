@@ -1,0 +1,26 @@
+{% extends 'base/base_single_card.html' %}
+
+{% block title %}
+  <title>Logout | Lambda</title>
+{% endblock title %}
+
+{% block cardHeader %}
+  Logged out
+{% endblock cardHeader %}
+
+{% block cardContent %}
+  <div class="card-header">
+    <h4>Log in as a demo user</h4>
+  </div>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+
+      <p>
+        Note that demo users cannot create, update or delete anything on the site.
+      </p>
+
+      <button type="submit" class="btn btn-primary d-block mx-auto">Log in</button>
+    </form>
+  </div>
+{% endblock cardContent %}
