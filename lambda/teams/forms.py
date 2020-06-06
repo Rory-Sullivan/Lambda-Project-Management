@@ -2,9 +2,10 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from . import models
+from base import custom_forms
 
 
-class TeamForm(forms.ModelForm):
+class TeamForm(custom_forms.CustomModelForm):
     class Meta:
         model = models.Team
         fields = [
@@ -14,13 +15,14 @@ class TeamForm(forms.ModelForm):
         ]
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop("user", None)
-        self.request_user = user
-        super(TeamForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
+
+        user = self.request_user
 
         if not user.profile.is_manager:
-            self.fields["leader"].queryset = user.profile.get_connections()
-            self.fields["members"].queryset = user.profile.get_connections()
+            q = user.profile.get_connections()
+            self.fields["leader"].queryset = q
+            self.fields["members"].queryset = q
 
     def clean_members(self):
         data = self.cleaned_data["members"]
@@ -52,3 +54,5 @@ class TeamForm(forms.ModelForm):
                     Please include {leader} in the members section below.
                 """
                 self.add_error("leader", msg)
+
+        return cleaned_data

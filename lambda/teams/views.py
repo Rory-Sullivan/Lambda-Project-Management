@@ -49,7 +49,7 @@ class TeamCreateView(
     success_message = "Team {name} was created successfully"
 
     def get_form_kwargs(self):
-        kwargs = super(TeamCreateView, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs.update({"user": self.request.user})
         return kwargs
 
@@ -73,7 +73,7 @@ class TeamUpdateView(
     success_message = "Team {name} was updated successfully"
 
     def get_form_kwargs(self):
-        kwargs = super(TeamUpdateView, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs.update({"user": self.request.user})
         return kwargs
 
