@@ -1,0 +1,31 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block styles %}
+  {{ block.super }}
+  <style>
+    .background {
+      background-image: url({% static 'base/images/das-sasha-VuBzplNNi0k-unsplash.jpg' %});
+      background-color: rgba(255, 255, 255, 0.3);
+      background-blend-mode: lighten;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+  </style>
+{% endblock styles %}
+
+{% block openBodyTag %}
+  <body class="background">
+{% endblock openBodyTag %}
+
+{% block footer %}
+  {{ block.super }}
+  <footer class="position-absolute bg-light w-100 text-center">
+    <p class="text-muted">
+      Photo by <a href="https://unsplash.com/@dasdasha2015?utm_source=unsplash&utm_medium=referral&utm_content=credit">Das Sasha</a> on Unsplash
+    </p>
+  </footer>
+{% endblock footer %}
