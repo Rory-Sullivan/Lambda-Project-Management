@@ -1,18 +1,20 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-sm navbar-dark bg-primary mb-3">
   <a class="navbar-brand" href="{% url 'home' %}">λ</a>
+  {% if request.user.is_authenticated %}
+    <div class="navbar-nav mr-auto flex-row">
+        <a class="nav-item nav-link pr-2" href="{% url 'active-tasks' %}">Tasks</a>
+        <a class="nav-item nav-link pr-2" href="{% url 'active-projects' %}">Projects</a>
+        <a class="nav-item nav-link" href="{% url 'teams' %}">Teams</a>
+    </div>
+  {% endif %}
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarItems"
     aria-controls="navbarItems" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarItems">
-    {% if request.user.is_authenticated %}
-      <div class="navbar-nav mr-auto">
-          <a class="nav-item nav-link" href="{% url 'active-tasks' %}">Tasks</a>
-          <a class="nav-item nav-link" href="{% url 'active-projects' %}">Projects</a>
-          <a class="nav-item nav-link" href="{% url 'teams' %}">Teams</a>
-      </div>
-    {% endif %}
+
+  <div class="collapse navbar-collapse text-right" id="navbarItems">
+
 
     <div class="navbar-nav ml-auto">
       {% if request.user.is_authenticated %}
