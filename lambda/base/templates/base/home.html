@@ -1,29 +1,58 @@
-{% extends 'base/base_single_card.html' %}
+{% extends 'base/base_sea_background.html' %}
 
-{% block cardContent %}
-  <div class="card-header">
-    <h4>Lambda Task Managment</h4>
+{% load static %}
+
+{% block content %}
+<div class="container col-12 col-md-10 col-lg-8 mx-auto">
+  <div class="row min-vh-100 align-items-center mb-3">
+    <div class="jumbotron w-100 text-center">
+      <h1 class="display-1">Lambda</h1>
+      <h1 class="display-4 mb-5">Task Management</h1>
+      <a href="{% url 'login' %}" class="btn btn-outline-primary">Login</a>
+      <a href="{% url 'register' %}" class="btn btn-outline-primary">Register</a>
+    </div>
   </div>
-  <div class="card-body">
-    <p class="card-text lead">
-      Lambda is a task management system designed to help you get stuff
-      done.
-    </p>
-    <ul class="lead">
-      <li>Design custom tasks</li>
-      <li>Build tasks from mini-tasks</li>
-      <li>Schedule tasks</li>
-      <li>Mark completed tasks</li>
-      <li>Set task priority</li>
-      <li>Roll over uncompleted tasks</li>
-    </ul>
-    <p>
-     Try it out as a demo user!
-     <a href="{% url 'demo-user-login' %}">Login as demo user</a>
-    </p>
+
+  <div class="row min-vh-100 align-items-center mb-3">
+    <div class="jumbotron w-100">
+      <p class="lead">
+        Lambda is a demo web application. It is written in python using the Django library. On the front end it makes heavy use of Bootstrap for it's styling and custom Javascript to add functionality. The management system is based around three core concepts; teams, projects and tasks, read more about these below.
+      </p>
+      <p class="text-center text-muted">
+        <a href="https://github.com/Rory-Sullivan/lambda" class="text-reset">Source&emsp;<img src="{% static 'base/images/GitHub-Mark-32px.png' %}" alt="Github logo"></a>
+      </p>
+    </div>
   </div>
-  <div class="card-footer">
-    <a href="{% url 'login' %}" class="card-link">Login</a>
-    <a href="{% url 'register' %}" class="card-link">Register</a>
+
+  <div class="row min-vh-100 align-items-center mb-3">
+    <div class="jumbotron w-100 text-right">
+      <h1 class="display-4">Teams</h1>
+      <p class="lead">
+        With Lambda you work as part of a team, this can include only yourself
+        or your entire organisation.
+      </p>
+    </div>
   </div>
-{% endblock cardContent %}
+
+  <div class="row min-vh-100 align-items-center mb-3">
+    <div class="jumbotron w-100">
+      <h1 class="display-4">Projects</h1>
+      <p class="lead">
+        Teams are assigned to projects which can be anything from you daily
+        to-dos to a product you are going to launch.
+      </p>
+    </div>
+  </div>
+
+  <div class="row min-vh-100 align-items-center mb-3">
+    <div class="jumbotron w-100  text-right">
+      <h1 class="display-4">Tasks</h1>
+      <p class="lead">
+        Projects get assigned tasks, each one representing a step towards
+        completing the project.
+      </p>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
