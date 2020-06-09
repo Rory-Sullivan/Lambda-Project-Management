@@ -1,0 +1,60 @@
+
+<div class="col-md-4 ml-auto mb-3">
+  <input type="search" class="searchInput form-control" data-table-id="{{ table_id }}" placeholder="Search" aria-label="Search table">
+</div>
+
+<table id="{{ table_id }}" class="table table-hover">
+  <thead>
+    <tr>
+      <th class="sortHeader" data-sorted="true" data-table-id="{{ table_id }}" data-col="0" data-type="number"
+        scope="col">
+        #
+      </th>
+      <th class="sortHeader" data-sorted="false" data-table-id="{{ table_id }}" data-col="1" data-type="text" scope="col">
+        Name
+      </th>
+      <th class="sortHeader" data-sorted="false" data-table-id="{{ table_id }}" data-col="2" data-type="text" scope="col">
+        Due in
+      </th>
+      <th class="sr-only" data-sorted="false" data-table-id="{{ table_id }}" data-col="3" data-type="text"
+        scope="col">
+        Status
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- We add a rotation of 0 to table rows so that the stretched links apply to the appropriate area. -->
+    {% for project in project_list %}
+      <tr {% if project.completed %}class="table-success" {% endif %} style="transform: rotate(0);">
+        <th scope="row" data-sort-value="{{ project.id }}">
+          <a href="{% url 'project-detail' project.id %}" class="stretched-link"></a>
+          {{ project.id }}
+        </th>
+
+        <td>{{ project.name }}</td>
+
+        {% if project.days_till_due > 7 %}
+          <td class="text-success" data-sort-value="{{ project.days_till_due }}">
+            {{ project.date_due | timeuntil }}
+          </td>
+        {% elif project.days_till_due > 0 and project.days_till_due <= 7 %}
+          <td class="text-warning" data-sort-value="{{ project.days_till_due }}">
+            {{ project.date_due | timeuntil }}
+          </td>
+        {% else %}
+          <td class="text-danger" data-sort-value="{{ project.days_till_due }}">
+            {{ project.date_due | timesince }} ago
+          </td>
+        {% endif %}
+
+        <td class="sr-only">
+          {% if project.completed %}
+            Completed
+          {% else %}
+            Active
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

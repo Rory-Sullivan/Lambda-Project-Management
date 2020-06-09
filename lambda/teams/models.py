@@ -35,3 +35,18 @@ class Team(models.Model):
 
     def was_created_by(self, user):
         return user == self.created_by
+
+    # Related objects
+    def get_related_projects(self):
+        return self.project_set.all()
+
+    def get_related_tasks(self):
+        related_projects = self.get_related_projects()
+
+        if len(related_projects) > 0:
+            q = related_projects[0].task_set.all()
+
+            for project in related_projects[1:]:
+                q = q | project.task_set.all()
+
+            return q

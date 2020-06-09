@@ -1,5 +1,7 @@
 {% extends 'base/base_detail.html' %}
 
+{% load static %}
+
 {% block title %}
   <title>Project {{ project.id }} | Lambda</title>
 {% endblock title %}
@@ -112,14 +114,19 @@
   </div>
 {% endblock cardContent %}
 
-{% block tasks %}
+{% block objects %}
   {% with project.task_set.all as task_list %}
-    {% include 'projects/project_task_list.html' %}
+    {% include 'projects/project_object_list.html' %}
   {% endwith %}
-{% endblock tasks %}
+{% endblock objects %}
 
 {% block comments %}
   {% with project.projectcomment_set.all as comments %}
     {% include 'comments/comments.html' %}
   {% endwith %}
 {% endblock comments %}
+
+{% block scripts %}
+  {{ block.super }}
+  <script src="{% static 'base/tableFunctions.js' %}"></script>
+{% endblock scripts %}

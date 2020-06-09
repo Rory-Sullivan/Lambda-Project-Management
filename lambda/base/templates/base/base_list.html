@@ -16,28 +16,15 @@
       {% endblock nav %}
     </div>
 
-    <div class="col-md-9">
-      <div class="d-flex flex-row-reverse no-gutters mb-3">
-        <div class="col-md-4">
-          <input type="search" class="searchInput form-control" data-table-id="sortTable1" placeholder="Search" aria-label="Search">
-        </div>
-      </div>
-
-      <table id="sortTable1" class="table table-hover">
-        <thead>
-          <tr>
-            {% block tableHeaders %}
-            {% endblock tableHeaders %}
-          </tr>
-        </thead>
-        <tbody>
-          {% block tableBody %}
-          {% endblock tableBody %}
-        </tbody>
-      </table>
+    <div class="col-md-9 no-gutters">
+      {% block table %}
+      {% endblock table %}
     </div>
   </div>
 </div>
-
-<script src="{% static 'base/tableFunctions.js' %}"></script>
 {% endblock content %}
+
+{% block scripts %}
+  {{ block.super }}
+  <script src="{% static 'base/tableFunctions.js' %}"></script>
+{% endblock scripts %}

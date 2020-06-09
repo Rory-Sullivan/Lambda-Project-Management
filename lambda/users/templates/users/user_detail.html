@@ -1,4 +1,5 @@
 {% extends 'base/base_single_card.html' %}
+{% load static %}
 
 {% block title %}
   <title>Profile | Lambda</title>
@@ -36,3 +37,8 @@
     {% endwith %}
   {% endwith %}
 {% endblock belowCard %}
+
+{% block scripts %}
+  {{ block.super }}
+  <script src="{% static 'base/tableFunctions.js' %}"></script>
+{% endblock scripts %}
