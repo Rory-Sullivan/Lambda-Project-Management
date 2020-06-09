@@ -7,6 +7,9 @@ from django.shortcuts import redirect, render, reverse
 from django.views import generic
 
 from . import forms
+from tasks.models import Task
+from projects.models import Project
+from teams.models import Team
 
 
 class UserCreateView(SuccessMessageMixin, generic.CreateView):
@@ -100,3 +103,26 @@ def demo_user_login_view(request):
         messages.error(request, "Username or password not correct.")
 
     return render(request, template_name="users/login_demo_user.html")
+
+
+class DashboardView(mixins.LoginRequiredMixin, generic.TemplateView):
+    template_name = "users/user_dashboard.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["task_list"] = Task.objects.filter(
+            assigned_to=self.request.user
+        ).order_by("date_due", "priority")
+
+        context["unassigned_task_list"] = (
+            Task.objects.filter(team__leader=self.request.user)
+            .filter(assigned_to=None)
+            .order_by("date_due", "priority")
+        )
+
+        context["projects_list"] = Project.objects.filter(
+            team=self.request.user
+        ).order_by("date_due")
+
+        return context
