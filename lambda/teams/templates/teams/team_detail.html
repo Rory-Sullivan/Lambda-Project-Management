@@ -55,7 +55,10 @@
   <div class="card-footer">
     {% if request.user == team.leader or request.user == team.created_by %}
       <a class="btn btn-primary" href="{% url 'team-update' team.id %}">Update</a>
-      <a class="btn btn-danger float-right" href="{% url 'team-delete' team.id %}">Delete</a>
+
+      {% if not request.user.profile.is_demo_user %}
+        <a class="btn btn-danger float-right" href="{% url 'team-delete' team.id %}">Delete</a>
+      {% endif %}
     {% else %}
       <small class="text-muted">You do not have permission to edit this team</small>
     {% endif %}

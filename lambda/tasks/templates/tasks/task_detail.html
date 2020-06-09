@@ -123,7 +123,9 @@
       {% endif %}
 
       {% if request.user == task.team.leader or request.user == task.created_by %}
-        <a class="btn btn-danger float-right" href="{% url 'task-delete' task.id %}">Delete</a>
+        {% if not request.user.profile.is_demo_user %}
+          <a class="btn btn-danger float-right" href="{% url 'task-delete' task.id %}">Delete</a>
+        {% endif %}
       {% endif %}
 
     {% elif task.assigned_to == None and request.user in task.team.members.all %}

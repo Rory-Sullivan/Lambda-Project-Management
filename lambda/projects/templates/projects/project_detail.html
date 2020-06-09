@@ -102,10 +102,15 @@
     {% if request.user == project.team.leader or request.user == project.created_by %}
       <a class="btn btn-primary" href="{% url 'project-update' project.id %}">Update</a>
       <a class="btn btn-primary" href="{% url 'project-add-task' project.id %}">Add Task</a>
+
       {% if not project.completed %}
         <a class="btn btn-success" href="{% url 'project-complete' project.id %}">Complete</a>
       {% endif %}
-      <a class="btn btn-danger float-right" href="{% url 'project-delete' project.id %}">Delete</a>
+
+      {% if not request.user.profile.is_demo_user %}
+        <a class="btn btn-danger float-right" href="{% url 'project-delete' project.id %}">Delete</a>
+      {% endif %}
+
     {% elif request.user in project.team.members.all %}
       <a class="btn btn-primary" href="{% url 'project-add-task' project.id %}">Add Task</a>
     {% else %}

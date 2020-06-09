@@ -20,11 +20,13 @@
     {% endif %}
   </div>
 
-  {% if request.user == user%}
-    <div class="card-footer">
-      <a class="btn btn-primary" href="{% url 'profile-update' %}">Update</a>
-      <a class="btn btn-danger float-right" href="{% url 'profile-delete' %}">Delete</a>
-    </div>
+  {% if not request.user.profile.is_demo_user %}
+    {% if request.user == user%}
+      <div class="card-footer">
+        <a class="btn btn-primary" href="{% url 'profile-update' %}">Update</a>
+        <a class="btn btn-danger float-right" href="{% url 'profile-delete' %}">Delete</a>
+      </div>
+    {% endif %}
   {% endif %}
 {% endblock cardContent %}
 
