@@ -58,14 +58,32 @@ Array.from(sortHeaders).forEach(header => {
       const sorted = (target.dataset.sorted === 'true');
       if (sorted) {
         reverseTable(target.dataset.tableId);
+        let arrow = target.getElementsByTagName("span")[0];
+        if (arrow.innerHTML === "↑") {
+          arrow.innerHTML = "↓";
+        } else {
+          arrow.innerHTML = "↑";
+        }
       } else {
         const tableId = target.dataset.tableId;
         const tableHeaders = document.getElementById(tableId).getElementsByClassName("sortHeader")
         Array.from(tableHeaders).forEach( header2 => {
+          let arrow = header2.getElementsByTagName("span")[0];
+          if (arrow) {
+            if (header2.dataset.sorted === 'true') {
+              arrow.innerHTML = "•"
+            } else {
+              arrow.innerHTML = ""
+            }
+          } else {
+            header2.innerHTML += "<span></span>";
+          }
+
           header2.dataset.sorted = false;
         })
         sortTable(tableId, target.dataset.col, target.dataset.type);
         target.dataset.sorted = true;
+        target.getElementsByTagName("span")[0].innerHTML = "↑"
       }
   })
 })
