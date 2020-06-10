@@ -1,13 +1,68 @@
 {% extends 'base/base.html' %}
 
+{% load static %}
+
 {% block title %}
   <title>Dashboard | Lambda</title>
 {% endblock title %}
 
 {% block content %}
-  <div class="container">
-    <h4>My Tasks</h4>
-    <h4>My Projects</h4>
-    <h4>Unassigned Tasks</h4>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg">
+        <div class="row">
+        <div class="col-md-8">
+          <h4>Tasks</h4>
+          <p>Tasks that have been assigned to you.</p>
+        </div>
+
+        {% with table_id="table1" row=True %} {# To include closing row tag #}
+          {% include 'tasks/tables/user_task_table.html' %}
+        {% endwith %}
+      </div>
+
+      <div class="col-lg">
+        <div class="row">
+        <div class="col-md-8">
+          <h4>Unassigned Tasks</h4>
+          <p>Unassigned tasks from projects that you lead.</p>
+        </div>
+
+        {% with table_id="table2" row=True task_list=unassigned_task_list %} {# To include closing row tag #}
+          {% include 'tasks/tables/generic_task_table.html' %}
+        {% endwith %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg">
+        <div class="row">
+        <div class="col-md-8">
+          <h4>Projects</h4>
+          <p>Projects that you are a part of.</p>
+        </div>
+
+        {% with table_id="table3" row=True %} {# To include closing row tag #}
+          {% include 'projects/tables/generic_project_table.html' %}
+        {% endwith %}
+      </div>
+
+      <div class="col-lg">
+        <div class="row">
+        <div class="col-md-8">
+          <h4>Teams</h4>
+          <p>Teams that you are a part of.</p>
+        </div>
+
+        {% with table_id="table4" row=True %} {# To include closing row tag #}
+          {% include 'teams/tables/generic_team_table.html' %}
+        {% endwith %}
+      </div>
+    </div>
   </div>
 {% endblock content %}
+
+{% block scripts %}
+  {{ block.super }}
+  <script src="{% static 'base/tableFunctions.js' %}"></script>
+{% endblock scripts %}

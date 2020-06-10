@@ -111,18 +111,25 @@ class DashboardView(mixins.LoginRequiredMixin, generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context["task_list"] = Task.objects.filter(
-            assigned_to=self.request.user
-        ).order_by("date_due", "priority")
-
-        context["unassigned_task_list"] = (
-            Task.objects.filter(team__leader=self.request.user)
-            .filter(assigned_to=None)
-            .order_by("date_due", "priority")
+        context["task_list"] = (
+            Task.objects.filter(completed=False)
+            .filter(assigned_to=self.request.user)
+            .order_by("date_due", "-priority_level")[:7]
         )
 
-        context["projects_list"] = Project.objects.filter(
-            team=self.request.user
-        ).order_by("date_due")
+        context["unassigned_task_list"] = (
+            Task.objects.filter(completed=False)
+            .filter(team__leader=self.request.user)
+            .filter(assigned_to=None)
+            .order_by("date_due", "-priority_level")[:7]
+        )
+
+        context["project_list"] = (
+            Project.objects.filter(completed=False)
+            .filter(team__members=self.request.user)
+            .order_by("date_due")
+        )
+
+        context["team_list"] = Team.objects.filter(members=self.request.user)
 
         return context

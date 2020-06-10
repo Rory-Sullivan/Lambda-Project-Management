@@ -1,7 +1,12 @@
 
-  <div class="col-md-4 ml-auto mb-3">
-      <input type="search" class="searchInput form-control" data-table-id="{{ table_id }}" placeholder="Search" aria-label="Search table">
+<div class="col-md-4 ml-auto mb-3 align-self-end">
+  <input type="search" class="searchInput form-control" data-table-id="{{ table_id }}" placeholder="Search" aria-label="Search table">
 </div>
+
+{# An optional closing tag so that the search box can be included in a row #}
+{% if row %}
+  </div>
+{% endif %}
 
 
 <table id="{{ table_id }}" class="table table-hover">
