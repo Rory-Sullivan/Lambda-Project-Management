@@ -29,7 +29,13 @@
       {{ form|crispy }}
 
       <button type="submit" class="btn btn-primary">Save</button>
-      <a class="btn btn-secondary" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+      <a class="btn btn-secondary" href="
+        {% if request.resolver_match.url_name == 'create-team' %}
+          {% url 'teams' %}
+        {% else %}
+          {% url 'team-detail' object.id %}
+        {% endif %}
+      ">Cancel</a>
     </form>
   </div>
 {% endblock cardContent %}
