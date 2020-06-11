@@ -32,6 +32,8 @@
       <a class="btn btn-secondary" href="
         {% if request.resolver_match.url_name == 'create-task' %}
           {% url 'active-tasks' %}
+        {% elif request.resolver_match.url_name == 'project-add-task' %}
+          {% url 'active-projects' %}
         {% else %}
           {% url 'task-detail' object.id %}
         {% endif %}
