@@ -34,8 +34,8 @@ can be assigned to a member of the project's team, it will then appear on a list
 of their active tasks. Tasks can be assigned by team members to themselves or by
 the team leader to anyone on the team. Any member of a project's team can create
 a task for the project. Every task is given a unique number that can be used to
-refer to it independently of the project or user it is assigned to. Tasks can
-also be marked as completed, this is generally done by the user that the task is
+refer to it independent of the project or user it is assigned to. Tasks can also
+be marked as completed, this is generally done by the user that the task is
 assigned to, but may also be done by the team leader.
 
 ## The Dashboard
