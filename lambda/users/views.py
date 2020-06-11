@@ -16,12 +16,20 @@ class UserCreateView(SuccessMessageMixin, generic.CreateView):
     model = User
     form_class = forms.UserRegisterForm
     template_name = "users/user_register.html"
-    success_message = (
-        "You're account was successfully created you can now login."
-    )
+    success_message = "You're account was successfully created."
 
     def get_success_url(self):
-        return reverse("login")
+        return reverse("dashboard")
+
+    def form_valid(self, form):
+        super().form_valid(form)
+        user = authenticate(
+            self.request,
+            username=form.cleaned_data["username"],
+            password=form.cleaned_data["password1"],
+        )
+        login(self.request, user)
+        return redirect(self.get_success_url())
 
 
 class UserDetailView(
