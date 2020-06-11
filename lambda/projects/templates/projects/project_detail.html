@@ -75,8 +75,13 @@
   <ul class="list-group list-group-flush">
     <li class="list-group-item">
       <strong>Due:</strong>&emsp;
-      {{ project.date_due }}&emsp;
-      ({{ project.date_due|timeuntil }})
+
+      {% if project.date_due %}
+        {{ project.date_due }}&emsp;
+        ({{ project.date_due|timeuntil }})
+      {% else %}
+        <small class="text-muted">This project does not a have a due date</small>
+      {% endif %}
     </li>
   </ul>
 

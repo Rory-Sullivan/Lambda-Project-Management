@@ -49,9 +49,13 @@
           <td class="text-warning" data-sort-value="{{ project.days_till_due }}">
             {{ project.date_due | timeuntil }}
           </td>
-        {% else %}
+        {% elif project.days_till_due <= 0 %}
           <td class="text-danger" data-sort-value="{{ project.days_till_due }}">
             {{ project.date_due | timesince }} ago
+          </td>
+        {% else %}
+          <td data-sort-value="Infinity">
+            Never
           </td>
         {% endif %}
 
