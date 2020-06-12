@@ -7,20 +7,21 @@
   <div class="row min-vh-100 align-items-center mb-3">
     <div class="jumbotron w-100 text-center">
       <h1 class="display-1">Lambda</h1>
-      <h1 class="display-4 mb-5">Task Management</h1>
+      <h1 class="display-4 mb-5">Project Management</h1>
+      <a href="{% url 'demo-user-login' %}" class="btn btn-primary">Demo</a>
+      <div class="w-100 mb-3"></div>
       <a href="{% url 'login' %}" class="btn btn-outline-primary">Login</a>
       <a href="{% url 'register' %}" class="btn btn-outline-primary">Register</a>
-      <a href="{% url 'demo-user-login' %}" class="btn btn-outline-primary">Demo</a>
     </div>
   </div>
 
   <div class="row min-vh-100 align-items-center mb-3">
     <div class="jumbotron w-100">
       <p class="lead">
-        Lambda is a demo web application. It is written in python using the Django library. On the front end it makes heavy use of Bootstrap for it's styling and custom Javascript to add functionality. The management system is based around three core concepts; teams, projects and tasks, read more about these below.
+        Lambda is a demo project management application. It is written in python using the Django library. On the front end it makes heavy use of Bootstrap for it's styling and custom Javascript to add functionality. The management system is based around three core concepts; teams, projects and tasks, read more about these below.
       </p>
       <p class="lead">
-        If you would like to try it out <a href="{% url 'demo-user-login' %}">log in as a demo user.</a>
+        If you would like to try it out <a href="{% url 'demo-user-login' %}">log in as a demo user here.</a>
       </p>
       <p class="text-center text-muted">
         <a href="https://github.com/Rory-Sullivan/lambda" class="text-reset">Source&emsp;<img src="{% static 'base/images/GitHub-Mark-32px.png' %}" alt="Github logo"></a>

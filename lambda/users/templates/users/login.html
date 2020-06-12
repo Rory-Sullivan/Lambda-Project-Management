@@ -22,11 +22,11 @@
     </form>
   </div>
   <div class="card-footer">
-    <small class="text-muted d-block">
-      Don't have an account? <a href="{% url 'register' %}">Register</a>
+    <small class="d-block">
+      Don't have an account? <a href="{% url 'demo-user-login' %}">login as a demo user</a> to try it out.
     </small>
     <small class="text-muted d-block">
-      Or <a href="{% url 'demo-user-login' %}">login as demo user</a>
+      Or <a href="{% url 'register' %}">Register</a>
     </small>
   </div>
 {% endblock cardContent %}
