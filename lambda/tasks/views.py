@@ -29,8 +29,10 @@ class ActiveTaskListView(mixins.LoginRequiredMixin, generic.ListView):
     model = Task
 
     def get_queryset(self):
-        return Task.objects.filter(assigned_to=self.request.user).filter(
-            completed=False
+        return (
+            Task.objects.filter(assigned_to=self.request.user)
+            .filter(completed=False)
+            .order_by("date_due", "-priority_level")
         )
 
 
@@ -56,7 +58,7 @@ class UnassignedTaskListView(mixins.LoginRequiredMixin, generic.ListView):
         for project in Project.objects.filter(team__leader=self.request.user):
             q = q | project.task_set.filter(assigned_to=None)
 
-        return q.distinct()
+        return q.distinct().order_by("date_due", "-priority_level")
 
 
 class TaskDetailView(
