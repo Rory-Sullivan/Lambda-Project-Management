@@ -13,6 +13,7 @@ class TeamForm(custom_forms.CustomModelForm):
             "leader",
             "members",
         ]
+        widgets = {"name": forms.TextInput(attrs={"autocomplete": "off"})}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

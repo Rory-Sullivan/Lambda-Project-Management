@@ -17,6 +17,8 @@ class ProjectForm(custom_forms.CustomModelForm):
             "date_due",
         ]
         widgets = {
+            "name": forms.TextInput(attrs={"autocomplete": "off"}),
+            "description": forms.Textarea(attrs={"autocomplete": "off"}),
             "date_due": DateWidget(),
         }
 

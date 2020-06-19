@@ -22,6 +22,8 @@ class TaskForm(custom_forms.CustomModelForm):
             "date_due",
         ]
         widgets = {
+            "title": forms.TextInput(attrs={"autocomplete": "off"}),
+            "description": forms.Textarea(attrs={"autocomplete": "off"}),
             "estimated_duration": DurationWidget(),
             "date_due": DateWidget(),
         }
