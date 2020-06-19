@@ -100,3 +100,7 @@
     {% endfor %}
   </tbody>
 </table>
+
+{% if not project_list %}
+  <p class="text-muted ml-3">No tasks to show</p>
+{% endif %}
