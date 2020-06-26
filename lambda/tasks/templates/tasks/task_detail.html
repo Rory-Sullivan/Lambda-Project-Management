@@ -47,7 +47,7 @@
     </p>
   </div>
 
-  <ul class="list-group list-group-flush">
+  <ul class="list-group list-group-flush border">
     <li
       {% if task.priority_level <= 3 %}
         class="list-group-item border-top list-group-item-success"
@@ -83,7 +83,7 @@
     </div>
   </div>
 
-  <ul class="list-group list-group-flush">
+  <ul class="list-group list-group-flush border">
     <li class="list-group-item">
       <strong>Due:</strong>&emsp;{{ task.date_due }}&emsp;({{ task.date_due|timeuntil }})
     </li>

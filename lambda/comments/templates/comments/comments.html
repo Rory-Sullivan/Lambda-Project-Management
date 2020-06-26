@@ -1,4 +1,4 @@
-{# To be inluded in 'base_detail.html' template with a context of 'comments' #}
+{# To be included in 'base_detail.html' template with a context of 'comments' #}
 
 {% load crispy_forms_tags %}
 
@@ -10,7 +10,7 @@
   <div class="card-header">
     <h3>Comments</h3>
   </div>
-  <ul class="list-group list-group-flush">
+  <ul class="list-group list-group-flush border">
     {% if comments %}
       {% for comment in comments %}
         <li class="list-group-item">
