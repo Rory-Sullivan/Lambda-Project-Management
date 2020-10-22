@@ -249,7 +249,7 @@ class TaskCompleteView(
     model = Task
     form_class = forms.CompleteTaskForm
     initial = {
-        "date_completed": date.today(),
+        "date_completed": date.today,
     }
     success_message = "Task #%(id)s completed"
 
