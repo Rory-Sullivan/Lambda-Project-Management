@@ -127,7 +127,7 @@ class DashboardView(mixins.LoginRequiredMixin, generic.TemplateView):
 
         context["unassigned_task_list"] = (
             Task.objects.filter(completed=False)
-            .filter(team__leader=self.request.user)
+            .filter(team__members__in=[self.request.user])
             .filter(assigned_to=None)
             .order_by("date_due", "-priority_level")[:7]
         )
