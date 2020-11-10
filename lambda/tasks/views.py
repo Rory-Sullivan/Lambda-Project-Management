@@ -56,7 +56,9 @@ class UnassignedTaskListView(mixins.LoginRequiredMixin, generic.ListView):
         q = Task.objects.none()
 
         for project in (Project.objects.filter(team__leader=self.request.user) | Project.objects.filter(team__members__in=[self.request.user])):
-            q = q | project.task_set.filter(assigned_to=None)
+            q = q | project.task_set.filter(assigned_to=None).filter(
+                completed=False
+            )
 
         return q.distinct().order_by("date_due", "-priority_level")
 
