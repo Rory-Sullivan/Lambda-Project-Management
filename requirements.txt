@@ -3,7 +3,7 @@ asgiref==3.2.7
 attrs==19.3.0
 black==19.10b0
 click==7.1.2
-Django==3.1.12
+Django==3.1.13
 django-crispy-forms==1.9.1
 pathspec==0.8.0
 pycodestyle==2.6.0
