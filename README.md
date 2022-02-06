@@ -1,8 +1,7 @@
 # Lambda
 
 Lambda is a project and task management web application built with Python and
-Django. Check out a live version
-[here](https://rorysullivan.pythonanywhere.com/).
+Django.
 
 ![Lambda dashboard image](./images/demo_dashboard.png)
 
