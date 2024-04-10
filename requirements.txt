@@ -1,7 +1,7 @@
 appdirs==1.4.3
 asgiref==3.2.7
 attrs==19.3.0
-black==19.10b0
+black==24.3.0
 click==7.1.2
 Django==3.1.14
 django-crispy-forms==1.9.1
